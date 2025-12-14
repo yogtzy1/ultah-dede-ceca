@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Happy Birthday</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 :root{--p:#ff2e63;--s:#ff9a9e;--bg:#0b0014;--card:rgba(255,255,255,.08)}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
@@ -19,33 +20,71 @@ button:hover{opacity:0.9}
 .slider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory}
 .slider img{width:220px;height:220px;border-radius:20px;margin:10px;object-fit:cover;scroll-snap-align:center}
 
-/* HERO ANIMASI */
-.hero-text{opacity:0; transform:translateY(-50px); transition: all 1s ease-out;}
-.hero-text.show{opacity:1; transform:translateY(0);}
-
-/* FIREWORK & HEART */
+/* FIREWORK */
 canvas{position:fixed;inset:0;pointer-events:none}
+
+/* HEART */
 .heart{position:absolute;color:var(--p);animation:fall linear infinite}
 @keyframes fall{from{transform:translateY(-10vh)}to{transform:translateY(110vh)}}
 
-/* LETTER GLOW */
-.letter-card p.glow-text{color:#ff2e63;text-shadow:0 0 5px #ff2e63,0 0 10px #ff9a9e,0 0 20px #ff2e63;}
+/* GIFT */
+.gift-wrapper{position:relative;width:120px;margin:auto;}
+.gift{cursor:pointer;font-size:60px;position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;z-index:10}
+#giftVideo{position:relative; z-index:5; width:100%; display:none; margin-top:150px}
 
-/* NAV BUTTONS FIXED BAWAH */
-.nav-buttons{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);width:auto;display:flex;justify-content:space-between;gap:10px;z-index:20}
+/* LETTER GLOW */
+.letter-card p.glow-text{
+  color:#ff2e63;
+  text-shadow:0 0 5px #ff2e63,0 0 10px #ff9a9e,0 0 20px #ff2e63;
+}
+
+/* NAVIGATION BUTTONS FIXED BAWAH */
+.nav-buttons{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:auto;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  z-index:20;
+}
 
 /* FINAL CHOICE BUTTONS */
-.choice-buttons{margin-top:20px;display:flex;justify-content:center;gap:15px}
-.choice-buttons button{padding:12px 28px;border:none;border-radius:30px;font-size:16px;cursor:pointer;transition:0.2s;}
+.choice-buttons{
+  margin-top:20px;
+  display:flex;
+  justify-content:center;
+  gap:15px;
+}
+.choice-buttons button{
+  padding:12px 28px;
+  border:none;
+  border-radius:30px;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.2s;
+}
 .choice-buttons .yes{background:#ff2e63;color:#fff;}
 .choice-buttons .no{background:#444;color:#fff;}
 .choice-buttons button:hover{transform:scale(1.05);}
 
 /* HEART CONFETTI FINAL */
-.final-heart{position:absolute;color:#ff2e63;font-size:24px;animation:fallFinal 3s linear forwards;pointer-events:none}
-@keyframes fallFinal{0%{transform:translateY(0) rotate(0deg);}100%{transform:translateY(-200px) rotate(360deg);opacity:0;}}
+.final-heart{
+  position:absolute;
+  color:#ff2e63;
+  font-size:24px;
+  animation:fallFinal 3s linear forwards;
+  pointer-events:none;
+}
+@keyframes fallFinal{
+  0%{transform:translateY(0) rotate(0deg);}
+  100%{transform:translateY(-200px) rotate(360deg);opacity:0;}
+}
 </style>
 </head>
+
 <body>
 <div class="bg"></div>
 <canvas id="fx"></canvas>
@@ -53,8 +92,8 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <!-- HERO -->
 <div class="page active" id="hero">
 <div class="card">
-<h1 class="hero-text">🎂 Happy Birthday</h1>
-<h2 class="hero-text">💖 SAYAANGKUU 💖</h2>
+<h1>🎂 Happy Birthday</h1>
+<h2>💖 SAYAANGKUU 💖</h2>
 <p id="count"></p>
 </div>
 </div>
@@ -91,10 +130,12 @@ sehat sehat yaa sayaang aku akan selalu ada di sampingmu di saat kamu sedih atau
 <div class="page" id="gift">
 <div class="card">
 <h2>🎁 Hadiah Buat kamuuu sayaangg</h2>
-<div class="gift no-swipe" onclick="openGift()"></div>
-<video id="giftVideo" width="100%" controls class="no-swipe" style="display:none">
-  <source src="https://files.catbox.moe/kla6mz.mp4" type="video/mp4">
-</video>
+<div class="gift-wrapper">
+  <div class="gift" id="giftBtn">🎁</div>
+  <video id="giftVideo" controls>
+    <source src="https://files.catbox.moe/kla6mz.mp4" type="video/mp4">
+  </video>
+</div>
 </div>
 </div>
 
@@ -113,12 +154,12 @@ sehat sehat yaa sayaang aku akan selalu ada di sampingmu di saat kamu sedih atau
 <!-- HALAMAN LAMARAN ROMANTIS -->
 <div class="page" id="proposalEnd">
 <div class="card">
-<h1>Terima kasih Sayang 💖</h1>
-<p>Kita akan selalu bersama selamanya! 🎉</p>
+<h1>Selamat! 💍</h1>
+<p>Sayaang, kita akan selalu bersama ❤️</p>
 </div>
 </div>
 
-<!-- NAV BUTTONS -->
+<!-- NAV BUTTONS FIXED -->
 <div class="nav-buttons">
 <button onclick="prev()" class="no-swipe">⬅ Kembali</button>
 <button onclick="next()" class="no-swipe">➡ Lanjut</button>
@@ -130,23 +171,21 @@ sehat sehat yaa sayaang aku akan selalu ada di sampingmu di saat kamu sedih atau
 const pages = document.querySelectorAll(".page");
 let i = 0;
 
-// NEXT & PREV
+/* NEXT & PREV */
 function next(){
     pages[i].classList.remove("active");
     i++;
-    if(i>=pages.length) i = pages.length-1;
+    if(i >= pages.length) i = pages.length - 1;
     pages[i].classList.add("active");
-    checkHeroPage();
 }
 function prev(){
     pages[i].classList.remove("active");
     i--;
-    if(i<0) i=0;
+    if(i < 0) i = 0;
     pages[i].classList.add("active");
-    checkHeroPage();
 }
 
-// COUNTDOWN
+/* COUNTDOWN */
 const t = new Date("2025-12-27");
 setInterval(()=>{
     const now = new Date();
@@ -154,51 +193,37 @@ setInterval(()=>{
     document.getElementById("count").innerHTML = diff<=0 ? "Selamat Ulang Tahun Yaa Sayang" : Math.floor(diff/86400000)+" hari lagi 💕";
 },1000);
 
-// SWIPE NAV
+/* SWIPE NAV */
 let startX = 0;
-document.addEventListener("touchstart", e=>{if(!e.target.classList.contains("no-swipe")) startX = e.touches[0].clientX;});
+document.addEventListener("touchstart", e=>{
+    if(!e.target.classList.contains("no-swipe")) startX=e.touches[0].clientX;
+});
 document.addEventListener("touchend", e=>{
     if(!e.target.classList.contains("no-swipe")){
-        const endX = e.changedTouches[0].clientX;
-        if(startX - endX > 50) next();
-        if(startX - endX < -50) prev();
+        const endX=e.changedTouches[0].clientX;
+        if(startX-endX>50) next();
+        if(startX-endX<-50) prev();
     }
 });
 
-// MUSIC
-function music(){document.getElementById("music").play();}
+/* MUSIC */
+function music(){document.getElementById("music").play()}
 
-// HERO ANIMATION
-function checkHeroPage(){
-    if(pages[i].id=="hero"){
-        const heroTexts = document.querySelectorAll("#hero .hero-text");
-        heroTexts.forEach((el, index)=>{
-            setTimeout(()=>{el.classList.add("show");}, index*500);
-        });
-        spawnHeroConfetti();
-    }
-}
+/* HEART CONFETTI */
+setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=3+Math.random()*5+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),8000);
+},300);
 
-// HERO CONFETTI / PETASAN
-function spawnHeroConfetti(){
-    setInterval(()=>{
-        for(let i=0;i<10;i++){
-            const conf = document.createElement("div");
-            conf.className="heart";
-            conf.innerHTML=Math.random()>0.5?"❤️":"🎉";
-            conf.style.left=Math.random()*100+"vw";
-            conf.style.fontSize=(15+Math.random()*20)+"px";
-            conf.style.top="90vh";
-            document.body.appendChild(conf);
-            setTimeout(()=>conf.remove(),4000);
-        }
-    },500);
-}
-
-// FIREWORKS 3D
+/* FIREWORKS 3D */
 const c=document.getElementById("fx"),ctx=c.getContext("2d");
 function resize(){c.width=innerWidth;c.height=innerHeight;}
-window.onresize=resize; resize();
+window.onresize=resize;resize();
 let particles=[];
 function firework(){for(let j=0;j<50;j++){
     particles.push({x:Math.random()*c.width,y:Math.random()*c.height,dx:(Math.random()-0.5)*5,dy:(Math.random()-0.5)*5,life:Math.random()*50});
@@ -208,23 +233,27 @@ setInterval(()=>{
     particles.forEach((p,index)=>{
         ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
         ctx.fillRect(p.x,p.y,3,3);
-        p.x+=p.dx; p.y+=p.dy; p.life--;
+        p.x+=p.dx;p.y+=p.dy;p.life--;
         if(p.life<=0) particles.splice(index,1);
     });
 },30);
 setInterval(firework,800);
 
-// GIFT VIDEO
-function openGift(){
-    document.getElementById("giftVideo").style.display="block";
-}
+/* GIFT VIDEO */
+const giftBtn=document.getElementById("giftBtn");
+giftBtn.addEventListener("click",()=>{
+    const video=document.getElementById("giftVideo");
+    video.style.display="block";
+    video.play();
+});
 
-// FINAL PROPOSAL INTERACTIVE
+/* FINAL PROPOSAL */
 const yesBtn=document.getElementById("yesBtn");
 const noBtn=document.getElementById("noBtn");
-const nomorWA="6285762184102"; // nomor WA
-yesBtn.addEventListener("click", ()=>{
-    for(let i=0;i<20;i++){
+const nomorWA="6285762184102";
+yesBtn.addEventListener("click",()=>{
+    // animasi hati
+    for(let j=0;j<20;j++){
         const h=document.createElement("div");
         h.className="final-heart";
         h.innerHTML="❤️";
@@ -233,17 +262,19 @@ yesBtn.addEventListener("click", ()=>{
         document.body.appendChild(h);
         setTimeout(()=>h.remove(),3000);
     }
+    // buka WA
     const pesan=`Aku mau sama kamuu selamanya 💖`;
     const url=`https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`;
     window.open(url,"_blank");
+
     setTimeout(()=>{
         pages[i].classList.remove("active");
         document.getElementById("proposalEnd").classList.add("active");
     },3000);
 });
 
-// "Tidak" kabur
-noBtn.addEventListener("mouseenter", ()=>{
+// tombol "Tidak" kabur
+noBtn.addEventListener("mouseenter",()=>{
     const maxX=window.innerWidth-noBtn.offsetWidth;
     const maxY=window.innerHeight-noBtn.offsetHeight;
     const randX=Math.floor(Math.random()*maxX);
@@ -252,12 +283,10 @@ noBtn.addEventListener("mouseenter", ()=>{
     noBtn.style.left=randX+"px";
     noBtn.style.top=randY+"px";
 });
-
-// START HERO ANIMATION
-checkHeroPage();
 </script>
 </body>
 </html>
+
 
 
 
