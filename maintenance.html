@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Maintenance</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{--p:#ff2e63;--s:#ff9a9e;--bg:#0b0014;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
+body{background:#000;color:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center;height:100vh;text-align:center;}
+.card{background:rgba(255,255,255,0.08);backdrop-filter:blur(16px);padding:30px;border-radius:25px;max-width:500px;animation:fadeIn 1s;}
+h1{color:#ff2e63;text-shadow:0 0 10px #ff2e63, 0 0 20px #ff9a9e;}
+p{color:#ff9a9e;font-weight:bold;text-shadow:0 0 10px #ff2e63,0 0 20px #ff9a9e;line-height:1.6;}
+@keyframes fadeIn {from{opacity:0;} to{opacity:1;}}
+</style>
+</head>
+
+<body>
+<div class="card" id="maintCard">
+  <h1>⚠️ HARAP TUNGGU ⚠️</h1>
+  <p>
+    WEBSITE SAAT INI SEDANG DI TUTUP,<br>
+    HARAP KEMBALI LAGI PADA WAKTU YANG SUDAH DI TETAPKAN
+  </p>
+  <p>~Hendra</p>
+  <p id="countdown"></p>
+</div>
+
+<script>
+// Set waktu akhir maintenance: 27 Desember 2025 pukul 00:00 WIB (+07:00)
+const maintenanceEnd = new Date("2025-12-27T00:00:00+07:00");
+
+// Fungsi update countdown
+function updateCountdown(){
+  const now = new Date();
+  const diff = maintenanceEnd - now;
+
+  if(diff <= 0){
+    // Maintenance selesai → redirect ke index.html
+    window.location.href = "index.html";
+    return;
+  }
+
+  const days = Math.floor(diff / (1000*60*60*24));
+  const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+  const minutes = Math.floor((diff % (1000*60*60)) / (1000*60));
+  const seconds = Math.floor((diff % (1000*60)) / 1000);
+
+  document.getElementById("countdown").innerHTML =
+    `Website akan dibuka dalam: ${days} hari ${hours} jam ${minutes} menit ${seconds} detik`;
+}
+
+// Update setiap detik
+setInterval(updateCountdown, 1000);
+updateCountdown(); // jalankan langsung saat load
+</script>
+
+</body>
+</html>
