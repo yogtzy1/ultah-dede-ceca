@@ -31,9 +31,6 @@ canvas{position:fixed;inset:0;pointer-events:none}
 .gift{width:120px;height:120px;margin:auto;background:var(--p);border-radius:15px;position:relative;cursor:pointer}
 .gift:before{content:"🎁";font-size:60px;line-height:120px}
 
-/* FACE SCAN SIMULATION */
-#faceScan{width:200px;height:200px;margin:auto;background:#111;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:16px;letter-spacing:1px}
-
 /* LETTER GLOW */
 .letter-card p.glow-text{
   color:#ff2e63;
@@ -84,6 +81,13 @@ canvas{position:fixed;inset:0;pointer-events:none}
   0%{transform:translateY(0) rotate(0deg);}
   100%{transform:translateY(-200px) rotate(360deg);opacity:0;}
 }
+
+/* HERO ANIMASI Teks */
+#hero h1, #hero h2{
+  opacity:0;
+  transform:translateY(-50px);
+  transition: all 1s ease-out;
+}
 </style>
 </head>
 
@@ -91,33 +95,25 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <div class="bg"></div>
 <canvas id="fx"></canvas>
 
-<!-- LOCK -->
-<div class="page active" id="lock">
-<div class="card">
-<h2>Verifikasi Wajah</h2>
-<div id="faceScan">🔍Scan Wajah Sayang</div><br>
-</div>
-</div>
-
 <!-- HERO -->
-<div class="page" id="hero">
-<div class="card">
-<h1>🎂 Happy Birthday</h1>
-<h2>💖 SAYAANGKUU 💖</h2>
-<p id="count"></p>
-</div>
+<div class="page active" id="hero">
+  <div class="card">
+    <h1>🎂 Happy Birthday</h1>
+    <h2>💖 SAYAANGKUU 💖</h2>
+    <p id="count"></p>
+  </div>
 </div>
 
 <!-- GALLERY -->
 <div class="page" id="gallery">
-<div class="card">
-<h2>Picture Kenangan Kita</h2>
-<div class="slider">
-<img src="photo1.jpg" class="no-swipe">
-<img src="photo2.jpg" class="no-swipe">
-<img src="photo3.jpg" class="no-swipe">
-</div>
-</div>
+  <div class="card">
+    <h2>Picture Kenangan Kita</h2>
+    <div class="slider">
+      <img src="photo1.jpg" class="no-swipe">
+      <img src="photo2.jpg" class="no-swipe">
+      <img src="photo3.jpg" class="no-swipe">
+    </div>
+  </div>
 </div>
 
 <!-- LETTER -->
@@ -138,13 +134,13 @@ canvas{position:fixed;inset:0;pointer-events:none}
 
 <!-- GIFT -->
 <div class="page" id="gift">
-<div class="card">
-<h2>🎁 Hadiah Buat kamuuu sayaangg</h2>
-<div class="gift no-swipe" onclick="openGift()"></div>
-<video id="giftVideo" width="100%" controls class="no-swipe" style="display:none">
-  <source src="https://files.catbox.moe/kla6mz.mp4" type="video/mp4">
-</video>
-</div>
+  <div class="card">
+    <h2>🎁 Hadiah Buat kamuuu sayaangg</h2>
+    <div class="gift no-swipe" onclick="openGift()"></div>
+    <video id="giftVideo" width="100%" controls class="no-swipe" style="display:none">
+      <source src="https://files.catbox.moe/kla6mz.mp4" type="video/mp4">
+    </video>
+  </div>
 </div>
 
 <!-- FINAL PROPOSAL -->
@@ -179,19 +175,13 @@ canvas{position:fixed;inset:0;pointer-events:none}
 const pages = document.querySelectorAll(".page");
 let i = 0;
 
-/* PASSWORD / FACE SIMULATION */
-function unlock(){
-    const scan = document.getElementById("faceScan");
-    scan.textContent = "Memindai wajah...";
-    setTimeout(()=>next(),3000);
-}
-
 /* NEXT & PREV */
 function next(){
     pages[i].classList.remove("active");
     i++;
     if(i >= pages.length) i = pages.length - 1;
     pages[i].classList.add("active");
+    if(pages[i].id === "hero") animateHeroText();
 }
 function prev(){
     pages[i].classList.remove("active");
@@ -210,10 +200,10 @@ setInterval(()=>{
 
 /* SWIPE NAV - SAFE */
 let startX = 0;
-document.addEventListener("touchstart", e => {
+document.addEventListener("touchstart", e=>{
     if(!e.target.classList.contains("no-swipe")) startX = e.touches[0].clientX;
 });
-document.addEventListener("touchend", e => {
+document.addEventListener("touchend", e=>{
     if(!e.target.classList.contains("no-swipe")){
         const endX = e.changedTouches[0].clientX;
         if(startX - endX > 50) next();
@@ -224,22 +214,48 @@ document.addEventListener("touchend", e => {
 /* MUSIC */
 function music(){document.getElementById("music").play()}
 
+/* HERO ANIMASI TEKS + CONFETTI */
+function animateHeroText(){
+    const heroTitle = document.querySelector("#hero h1");
+    const heroSub = document.querySelector("#hero h2");
+    heroTitle.style.opacity = 1;
+    heroTitle.style.transform = "translateY(0)";
+    setTimeout(()=>{
+        heroSub.style.opacity = 1;
+        heroSub.style.transform = "translateY(0)";
+    },500);
+
+    // confetti hearts
+    function spawnConfetti(){
+        for(let i=0;i<15;i++){
+            const conf = document.createElement("div");
+            conf.className="heart";
+            conf.innerHTML = Math.random()>0.5?"❤️":"🎉";
+            conf.style.left=Math.random()*100+"vw";
+            conf.style.fontSize=(15+Math.random()*20)+"px";
+            document.body.appendChild(conf);
+            setTimeout(()=>conf.remove(),4000);
+        }
+    }
+    setInterval(spawnConfetti,500);
+}
+
 /* HEART CONFETTI */
 setInterval(()=>{
     const h = document.createElement("div");
-    h.className = "heart";
-    h.innerHTML = "❤️";
-    h.style.left = Math.random()*100+"vw";
-    h.style.animationDuration = 3+Math.random()*5+"s";
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=3+Math.random()*5+"s";
     document.body.appendChild(h);
     setTimeout(()=>h.remove(),8000);
 },300);
 
 /* FIREWORKS 3D */
-const c = document.getElementById("fx"), ctx = c.getContext("2d");
-function resize(){c.width = innerWidth; c.height = innerHeight;}
-window.onresize = resize; resize();
-let particles = [];
+const c=document.getElementById("fx"),ctx=c.getContext("2d");
+function resize(){c.width=innerWidth;c.height=innerHeight;}
+window.onresize=resize; resize();
+let particles=[];
 function firework(){for(let j=0;j<50;j++){
     particles.push({x:Math.random()*c.width, y:Math.random()*c.height, dx:(Math.random()-0.5)*5, dy:(Math.random()-0.5)*5, life:Math.random()*50});
 }}
@@ -248,7 +264,7 @@ setInterval(()=>{
     particles.forEach((p,index)=>{
         ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
         ctx.fillRect(p.x,p.y,3,3);
-        p.x += p.dx; p.y += p.dy; p.life--;
+        p.x+=p.dx; p.y+=p.dy; p.life--;
         if(p.life<=0) particles.splice(index,1);
     });
 },30);
@@ -260,27 +276,27 @@ function openGift(){
 }
 
 /* FINAL PROPOSAL INTERAKTIF */
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
 
 // WhatsApp template
-const nomorWA = "6285762184102"; // ganti dengan nomor kamu
-const nama = "Cheisya";
-const tanggal = new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'});
+const nomorWA="6285762184102"; // ganti nomor
+const nama="Cheisya";
+const tanggal=new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'});
 
 // Klik "Mau ❤️"
 yesBtn.addEventListener("click", ()=>{
     for(let i=0;i<20;i++){
-        const h = document.createElement("div");
-        h.className = "final-heart";
-        h.innerHTML = "❤️";
-        h.style.left = Math.random()*80 + "vw";
-        h.style.top = "80vh";
+        const h=document.createElement("div");
+        h.className="final-heart";
+        h.innerHTML="❤️";
+        h.style.left=Math.random()*80+"vw";
+        h.style.top="80vh";
         document.body.appendChild(h);
         setTimeout(()=>h.remove(),3000);
     }
-    const pesan = `Aku mau sama kamuu selamanya 💖`;
-    const url = `https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`;
+    const pesan=`Aku mau sama kamuu selamanya 💖`;
+    const url=`https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`;
     window.open(url,"_blank");
 
     setTimeout(()=>{
@@ -291,17 +307,18 @@ yesBtn.addEventListener("click", ()=>{
 
 // Klik "Tidak 💔" → kabur
 noBtn.addEventListener("mouseenter", ()=>{
-    const maxX = window.innerWidth - noBtn.offsetWidth;
-    const maxY = window.innerHeight - noBtn.offsetHeight;
-    const randX = Math.floor(Math.random() * maxX);
-    const randY = Math.floor(Math.random() * maxY);
-    noBtn.style.position = "absolute";
-    noBtn.style.left = randX + "px";
-    noBtn.style.top = randY + "px";
+    const maxX=window.innerWidth-noBtn.offsetWidth;
+    const maxY=window.innerHeight-noBtn.offsetHeight;
+    const randX=Math.floor(Math.random()*maxX);
+    const randY=Math.floor(Math.random()*maxY);
+    noBtn.style.position="absolute";
+    noBtn.style.left=randX+"px";
+    noBtn.style.top=randY+"px";
 });
 </script>
 </body>
 </html>
+
 
 
 
