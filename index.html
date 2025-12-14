@@ -27,11 +27,6 @@ canvas{position:fixed;inset:0;pointer-events:none}
 .heart{position:absolute;color:var(--p);animation:fall linear infinite}
 @keyframes fall{from{transform:translateY(-10vh)}to{transform:translateY(110vh)}}
 
-/* GIFT */
-.gift-wrapper{position:relative;width:120px;margin:auto;}
-.gift{cursor:pointer;font-size:60px;position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;z-index:10}
-#giftVideo{position:relative; z-index:5; width:100%; display:none; margin-top:150px}
-
 /* LETTER GLOW */
 .letter-card p.glow-text{
   color:#ff2e63;
@@ -70,7 +65,7 @@ canvas{position:fixed;inset:0;pointer-events:none}
 .choice-buttons .no{background:#444;color:#fff;}
 .choice-buttons button:hover{transform:scale(1.05);}
 
-/* HEART CONFETTI FINAL */
+/* FINAL HEART CONFETTI */
 .final-heart{
   position:absolute;
   color:#ff2e63;
@@ -91,78 +86,78 @@ canvas{position:fixed;inset:0;pointer-events:none}
 
 <!-- HERO -->
 <div class="page active" id="hero">
-<div class="card">
-<h1>🎂 Happy Birthday</h1>
-<h2>💖 SAYAANGKUU 💖</h2>
-<p id="count"></p>
-</div>
+  <div class="card">
+    <h1>🎂 Happy Birthday</h1>
+    <h2>💖 SAYAANGKUU 💖</h2>
+    <p id="count"></p>
+  </div>
 </div>
 
 <!-- GALLERY -->
 <div class="page" id="gallery">
-<div class="card">
-<h2>Picture Kenangan Kita</h2>
-<div class="slider">
-<img src="photo1.jpg" class="no-swipe">
-<img src="photo2.jpg" class="no-swipe">
-<img src="photo3.jpg" class="no-swipe">
-</div>
-</div>
+  <div class="card">
+    <h2>Picture Kenangan Kita</h2>
+    <div class="slider">
+      <img src="photo1.jpg" class="no-swipe">
+      <img src="photo2.jpg" class="no-swipe">
+      <img src="photo3.jpg" class="no-swipe">
+    </div>
+  </div>
 </div>
 
 <!-- LETTER -->
 <div class="page" id="letter">
-<div class="card letter-card">
-<h2>Ucapan dari akuu untuk kamu</h2>
-<p class="glow-text">
-Sayang,<br>
-Happy Birthday.<br>
-Semoga panjang umur, sehat selalu yaa.<br>
-Semoga jadi anak yang berbakti dan selalu menjadi kebanggan orang tua,<br>
-dan segala sesuatu atau impianmu bisa terwujud di hari kelak,<br>
-sehat sehat yaa sayaang aku akan selalu ada di sampingmu di saat kamu sedih ataupun bahagia<br>
-<strong>AKU SAYANG KAMU SELAMANYAAAAAAAAAA❤️</strong>
-</p>
-</div>
+  <div class="card letter-card">
+    <h2>Ucapan dari akuu untuk kamu</h2>
+    <p class="glow-text">
+      Sayang,<br>
+      Happy Birthday.<br>
+      Semoga panjang umur, sehat selalu yaa.<br>
+      Semoga jadi anak yang berbakti dan selalu menjadi kebanggan orang tua,<br>
+      dan segala sesuatu atau impianmu bisa terwujud di hari kelak,<br>
+      sehat sehat yaa sayaang aku akan selalu ada di sampingmu di saat kamu sedih ataupun bahagia<br>
+      <strong>AKU SAYANG KAMU SELAMANYAAAAAAAAAA❤️</strong>
+    </p>
+  </div>
 </div>
 
 <!-- GIFT -->
 <div class="page" id="gift">
-<div class="card">
-<h2>🎁 Hadiah Buat kamuuu sayaangg</h2>
-<div class="gift-wrapper">
-  <div class="gift" id="giftBtn">🎁</div>
-  <video id="giftVideo" controls>
-    <source src="https://files.catbox.moe/kla6mz.mp4" type="video/mp4">
-  </video>
-</div>
-</div>
+  <div class="card">
+    <h2>🎁 Hadiah Buat kamuuu sayaangg</h2>
+    <div style="text-align:center; margin:20px 0;">
+      <button id="giftBtn" style="padding:15px 30px; font-size:24px; border-radius:50%; cursor:pointer;">🎁</button>
+    </div>
+    <video id="giftVideo" controls style="display:none; width:100%; border-radius:15px; margin-top:20px;">
+      <source src="https://files.catbox.moe/kla6mz.mp4" type="video/mp4">
+    </video>
+  </div>
 </div>
 
 <!-- FINAL PROPOSAL -->
 <div class="page" id="final">
-<div class="card">
-<h1>Do you want to be with me forever?</h1>
-<p>SAYAANGGG, apa kamu mau sama aku selamanya?</p>
-<div class="choice-buttons">
-<button class="yes" id="yesBtn">Mau ❤️</button>
-<button class="no" id="noBtn">Tidak 💔</button>
-</div>
-</div>
+  <div class="card">
+    <h1>Do you want to be with me forever?</h1>
+    <p>SAYAANGGG, apa kamu mau sama aku selamanya?</p>
+    <div class="choice-buttons">
+      <button class="yes" id="yesBtn">Mau ❤️</button>
+      <button class="no" id="noBtn">Tidak 💔</button>
+    </div>
+  </div>
 </div>
 
 <!-- HALAMAN LAMARAN ROMANTIS -->
 <div class="page" id="proposalEnd">
-<div class="card">
-<h1>Selamat! 💍</h1>
-<p>Sayaang, kita akan selalu bersama ❤️</p>
-</div>
+  <div class="card">
+    <h1>Do you want to be with me forever?</h1>
+    <p>SAYAANGGG, aku bahagia kamu bilang “Mau” ❤️</p>
+  </div>
 </div>
 
 <!-- NAV BUTTONS FIXED -->
 <div class="nav-buttons">
-<button onclick="prev()" class="no-swipe">⬅ Kembali</button>
-<button onclick="next()" class="no-swipe">➡ Lanjut</button>
+  <button onclick="prev()" class="no-swipe">⬅ Kembali</button>
+  <button onclick="next()" class="no-swipe">➡ Lanjut</button>
 </div>
 
 <audio id="music" src="music.mp3"></audio>
@@ -185,7 +180,7 @@ function prev(){
     pages[i].classList.add("active");
 }
 
-/* COUNTDOWN */
+/* COUNTDOWN HARI ULANG TAHUN */
 const t = new Date("2025-12-27");
 setInterval(()=>{
     const now = new Date();
@@ -193,16 +188,16 @@ setInterval(()=>{
     document.getElementById("count").innerHTML = diff<=0 ? "Selamat Ulang Tahun Yaa Sayang" : Math.floor(diff/86400000)+" hari lagi 💕";
 },1000);
 
-/* SWIPE NAV */
+/* SWIPE NAV - SAFE */
 let startX = 0;
-document.addEventListener("touchstart", e=>{
-    if(!e.target.classList.contains("no-swipe")) startX=e.touches[0].clientX;
+document.addEventListener("touchstart", e => {
+    if(!e.target.classList.contains("no-swipe")) startX = e.touches[0].clientX;
 });
-document.addEventListener("touchend", e=>{
+document.addEventListener("touchend", e => {
     if(!e.target.classList.contains("no-swipe")){
-        const endX=e.changedTouches[0].clientX;
-        if(startX-endX>50) next();
-        if(startX-endX<-50) prev();
+        const endX = e.changedTouches[0].clientX;
+        if(startX - endX > 50) next();
+        if(startX - endX < -50) prev();
     }
 });
 
@@ -211,81 +206,83 @@ function music(){document.getElementById("music").play()}
 
 /* HEART CONFETTI */
 setInterval(()=>{
-    const h=document.createElement("div");
-    h.className="heart";
-    h.innerHTML="❤️";
-    h.style.left=Math.random()*100+"vw";
-    h.style.animationDuration=3+Math.random()*5+"s";
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "❤️";
+    h.style.left = Math.random()*100+"vw";
+    h.style.animationDuration = 3+Math.random()*5+"s";
     document.body.appendChild(h);
     setTimeout(()=>h.remove(),8000);
 },300);
 
 /* FIREWORKS 3D */
-const c=document.getElementById("fx"),ctx=c.getContext("2d");
-function resize(){c.width=innerWidth;c.height=innerHeight;}
-window.onresize=resize;resize();
-let particles=[];
+const c = document.getElementById("fx"), ctx = c.getContext("2d");
+function resize(){c.width = innerWidth; c.height = innerHeight;}
+window.onresize = resize; resize();
+let particles = [];
 function firework(){for(let j=0;j<50;j++){
-    particles.push({x:Math.random()*c.width,y:Math.random()*c.height,dx:(Math.random()-0.5)*5,dy:(Math.random()-0.5)*5,life:Math.random()*50});
+    particles.push({x:Math.random()*c.width, y:Math.random()*c.height, dx:(Math.random()-0.5)*5, dy:(Math.random()-0.5)*5, life:Math.random()*50});
 }}
 setInterval(()=>{
     ctx.clearRect(0,0,c.width,c.height);
     particles.forEach((p,index)=>{
         ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
         ctx.fillRect(p.x,p.y,3,3);
-        p.x+=p.dx;p.y+=p.dy;p.life--;
+        p.x += p.dx; p.y += p.dy; p.life--;
         if(p.life<=0) particles.splice(index,1);
     });
 },30);
 setInterval(firework,800);
 
 /* GIFT VIDEO */
-const giftBtn=document.getElementById("giftBtn");
-giftBtn.addEventListener("click",()=>{
-    const video=document.getElementById("giftVideo");
-    video.style.display="block";
+const giftBtn = document.getElementById("giftBtn");
+giftBtn.addEventListener("click", ()=>{
+    const video = document.getElementById("giftVideo");
+    video.style.display = "block";
+    video.scrollIntoView({behavior:"smooth"});
     video.play();
 });
 
-/* FINAL PROPOSAL */
-const yesBtn=document.getElementById("yesBtn");
-const noBtn=document.getElementById("noBtn");
-const nomorWA="6285762184102";
-yesBtn.addEventListener("click",()=>{
-    // animasi hati
-    for(let j=0;j<20;j++){
-        const h=document.createElement("div");
-        h.className="final-heart";
-        h.innerHTML="❤️";
-        h.style.left=Math.random()*80+"vw";
-        h.style.top="80vh";
+/* FINAL PROPOSAL INTERAKTIF */
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+
+// WhatsApp template
+const nomorWA = "6285762184102"; // ganti nomor kamu
+const pesanWA = `Aku mau sama kamuu selamanya 💖`;
+
+// Klik "Mau ❤️"
+yesBtn.addEventListener("click", ()=>{
+    for(let i=0;i<20;i++){
+        const h = document.createElement("div");
+        h.className = "final-heart";
+        h.innerHTML = "❤️";
+        h.style.left = Math.random()*80 + "vw";
+        h.style.top = "80vh";
         document.body.appendChild(h);
         setTimeout(()=>h.remove(),3000);
     }
-    // buka WA
-    const pesan=`Aku mau sama kamuu selamanya 💖`;
-    const url=`https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`;
-    window.open(url,"_blank");
-
+    window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(pesanWA)}`,"_blank");
     setTimeout(()=>{
         pages[i].classList.remove("active");
         document.getElementById("proposalEnd").classList.add("active");
     },3000);
 });
 
-// tombol "Tidak" kabur
-noBtn.addEventListener("mouseenter",()=>{
-    const maxX=window.innerWidth-noBtn.offsetWidth;
-    const maxY=window.innerHeight-noBtn.offsetHeight;
-    const randX=Math.floor(Math.random()*maxX);
-    const randY=Math.floor(Math.random()*maxY);
-    noBtn.style.position="absolute";
-    noBtn.style.left=randX+"px";
-    noBtn.style.top=randY+"px";
+// Klik "Tidak 💔" → kabur
+noBtn.addEventListener("mouseenter", ()=>{
+    const maxX = window.innerWidth - noBtn.offsetWidth;
+    const maxY = window.innerHeight - noBtn.offsetHeight;
+    const randX = Math.floor(Math.random() * maxX);
+    const randY = Math.floor(Math.random() * maxY);
+    noBtn.style.position = "absolute";
+    noBtn.style.left = randX + "px";
+    noBtn.style.top = randY + "px";
 });
 </script>
 </body>
 </html>
+
 
 
 
