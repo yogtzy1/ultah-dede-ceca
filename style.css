@@ -1,0 +1,21 @@
+/* LETTER - kotak bercahaya */
+.letter-card {
+  border: 2px solid #ff2e63; /* bingkai */
+  padding: 25px;
+  border-radius: 25px;
+  box-shadow: 0 0 20px #ff2e63, 0 0 40px #ff9a9e; /* cahaya bingkai */
+  backdrop-filter: blur(10px);
+  position: relative;
+}
+
+/* Glowing Text */
+.glow-text {
+  color: #ff2e63;
+  text-shadow:
+     0 0 5px #ff2e63,
+     0 0 10px #ff2e63,
+     0 0 20px #ff2e63,
+     0 0 40px #ff9a9e;
+  font-weight: bold;
+  line-height: 1.6;
+}
