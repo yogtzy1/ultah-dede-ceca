@@ -12,8 +12,10 @@ body{background:#000;color:#fff;overflow:hidden}
 .bg{position:fixed;inset:0;background:url(bg.jpg) center/cover;filter:blur(25px);opacity:.4;z-index:-1}
 .page{width:100vw;height:100vh;display:none;align-items:center;justify-content:center;text-align:center;padding:20px}
 .active{display:flex}
-.card{background:var(--card);backdrop-filter:blur(16px);padding:25px;border-radius:25px;max-width:420px;width:100%}
-button{margin-top:15px;padding:12px 30px;border:none;border-radius:30px;background:var(--p);color:#fff;font-size:15px;cursor:pointer}
+.card{background:var(--card);backdrop-filter:blur(16px);padding:25px;border-radius:25px;max-width:420px;width:100%;position:relative}
+
+/* BUTTON STYLING */
+button{margin-top:15px;padding:12px 30px;border:none;border-radius:30px;background:var(--p);color:#fff;font-size:15px;cursor:pointer;z-index:10;position:relative}
 
 /* SLIDER */
 .slider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory}
@@ -38,6 +40,25 @@ canvas{position:fixed;inset:0;pointer-events:none}
   color:#ff2e63;
   text-shadow:0 0 5px #ff2e63,0 0 10px #ff9a9e,0 0 20px #ff2e63;
 }
+
+/* BUTTON NAVIGASI DIATAS VIDEO */
+.gift-button{
+  position:absolute;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:10;
+}
+
+/* BUTTON NEXT / PREV UMUM */
+.nav-buttons{
+  display:flex;
+  justify-content:space-between;
+  margin-top:15px;
+}
+.nav-buttons button{
+  width:48%;
+}
 </style>
 </head>
 
@@ -60,7 +81,10 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <h1>🎂 Happy Birthday</h1>
 <h2>💖 SAYAANGKUU 💖</h2>
 <p id="count"></p>
+<div class="nav-buttons">
+<button onclick="prev()" class="no-swipe">⬅ Kembali</button>
 <button onclick="next()" class="no-swipe">➡ Lanjut</button>
+</div>
 </div>
 </div>
 
@@ -73,7 +97,10 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <img src="photo2.jpg" class="no-swipe">
 <img src="photo3.jpg" class="no-swipe">
 </div>
+<div class="nav-buttons">
+<button onclick="prev()" class="no-swipe">⬅ Kembali</button>
 <button onclick="next()" class="no-swipe">➡ Lanjut</button>
+</div>
 </div>
 </div>
 
@@ -90,7 +117,10 @@ canvas{position:fixed;inset:0;pointer-events:none}
       sehat sehat yaa sayaang aku akan selalu ada di sampingmu di saat kamu sedih ataupun bahagia<br>
       <strong>AKU SAYANG KAMU SELAMANYAAAAAAAAAA❤️</strong>
     </p>
+    <div class="nav-buttons">
+    <button onclick="prev()" class="no-swipe">⬅ Kembali</button>
     <button onclick="next()" class="no-swipe">➡ Lanjut</button>
+    </div>
   </div>
 </div>
 
@@ -101,9 +131,11 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <div class="gift no-swipe" onclick="openGift()"></div>
 <video id="giftVideo" width="100%" controls class="no-swipe" style="display:none">
   <source src="https://files.catbox.moe/kla6mz.mp4" type="video/mp4">
-  Your browser does not support the video tag.
 </video>
+<div class="nav-buttons gift-button">
+<button onclick="prev()" class="no-swipe">⬅ Kembali</button>
 <button onclick="next()" class="no-swipe">➡ Lanjut</button>
+</div>
 </div>
 </div>
 
@@ -112,7 +144,10 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <div class="card">
 <h1>Do you want to be with me forever?</h1>
 <p>SAYAANGGG, apa kamu mau sama aku selamanya?</p>
+<div class="nav-buttons">
+<button onclick="prev()" class="no-swipe">⬅ Kembali</button>
 <button class="no-swipe" onclick="proposalYes()">Mauu</button>
+</div>
 </div>
 </div>
 
@@ -129,11 +164,17 @@ function unlock(){
     setTimeout(()=>next(),3000);
 }
 
-/* NEXT PAGE */
+/* NEXT / PREV PAGE */
 function next(){
     pages[i].classList.remove("active");
     i++;
     if(i >= pages.length) i = pages.length - 1;
+    pages[i].classList.add("active");
+}
+function prev(){
+    pages[i].classList.remove("active");
+    i--;
+    if(i < 0) i = 0;
     pages[i].classList.add("active");
 }
 
