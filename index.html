@@ -8,11 +8,11 @@
 <style>
 :root{--p:#ff2e63;--s:#ff9a9e;--bg:#0b0014;--card:rgba(255,255,255,.08)}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
-body{background:#000;color:#fff;overflow:hidden}
+body{background:#000;color:#fff;overflow:hidden;display:flex;flex-direction:column;height:100vh}
 .bg{position:fixed;inset:0;background:url(bg.jpg) center/cover;filter:blur(25px);opacity:.4;z-index:-1}
-.page{width:100vw;height:100vh;display:none;align-items:center;justify-content:center;text-align:center;padding:20px;position:relative}
+.page{flex:1;width:100vw;display:none;align-items:center;justify-content:center;text-align:center;padding:20px;position:relative}
 .active{display:flex}
-.card{background:var(--card);backdrop-filter:blur(16px);padding:25px;border-radius:25px;max-width:420px;width:100%;position:relative}
+.card{background:var(--card);backdrop-filter:blur(16px);padding:25px;border-radius:25px;max-width:420px;width:100%;position:relative;z-index:1}
 button{padding:12px 25px;border:none;border-radius:30px;background:var(--p);color:#fff;font-size:15px;cursor:pointer;transition:0.2s}
 button:hover{opacity:0.9}
 
@@ -40,18 +40,18 @@ canvas{position:fixed;inset:0;pointer-events:none}
   text-shadow:0 0 5px #ff2e63,0 0 10px #ff9a9e,0 0 20px #ff2e63;
 }
 
-/* NAVIGATION BUTTONS */
+/* NAVIGATION BUTTONS FIXED BAWAH */
 .nav-buttons{
-  position:absolute;
+  position:fixed;
   bottom:20px;
   left:50%;
   transform:translateX(-50%);
-  width:90%;
+  width:auto;
   display:flex;
   justify-content:space-between;
-  z-index:10;
+  gap:10px;
+  z-index:20;
 }
-.nav-buttons button{flex:1;margin:0 10px;}
 </style>
 </head>
 
@@ -64,7 +64,6 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <div class="card">
 <h2>Verifikasi Wajah</h2>
 <div id="faceScan">🔍Scan Wajah Sayang</div><br>
-<button class="no-swipe" onclick="unlock()">Mulai</button>
 </div>
 </div>
 
@@ -74,10 +73,6 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <h1>🎂 Happy Birthday</h1>
 <h2>💖 SAYAANGKUU 💖</h2>
 <p id="count"></p>
-<div class="nav-buttons">
-  <button onclick="prev()" class="no-swipe">⬅ Kembali</button>
-  <button onclick="next()" class="no-swipe">➡ Lanjut</button>
-</div>
 </div>
 </div>
 
@@ -89,10 +84,6 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <img src="photo1.jpg" class="no-swipe">
 <img src="photo2.jpg" class="no-swipe">
 <img src="photo3.jpg" class="no-swipe">
-</div>
-<div class="nav-buttons">
-  <button onclick="prev()" class="no-swipe">⬅ Kembali</button>
-  <button onclick="next()" class="no-swipe">➡ Lanjut</button>
 </div>
 </div>
 </div>
@@ -110,10 +101,6 @@ canvas{position:fixed;inset:0;pointer-events:none}
       sehat sehat yaa sayaang aku akan selalu ada di sampingmu di saat kamu sedih ataupun bahagia<br>
       <strong>AKU SAYANG KAMU SELAMANYAAAAAAAAAA❤️</strong>
     </p>
-    <div class="nav-buttons">
-      <button onclick="prev()" class="no-swipe">⬅ Kembali</button>
-      <button onclick="next()" class="no-swipe">➡ Lanjut</button>
-    </div>
   </div>
 </div>
 
@@ -125,10 +112,6 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <video id="giftVideo" width="100%" controls class="no-swipe" style="display:none">
   <source src="https://files.catbox.moe/kla6mz.mp4" type="video/mp4">
 </video>
-<div class="nav-buttons">
-  <button onclick="prev()" class="no-swipe">⬅ Kembali</button>
-  <button onclick="next()" class="no-swipe">➡ Lanjut</button>
-</div>
 </div>
 </div>
 
@@ -137,11 +120,13 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <div class="card">
 <h1>Do you want to be with me forever?</h1>
 <p>SAYAANGGG, apa kamu mau sama aku selamanya?</p>
+</div>
+</div>
+
+<!-- NAV BUTTONS FIXED -->
 <div class="nav-buttons">
   <button onclick="prev()" class="no-swipe">⬅ Kembali</button>
-  <button onclick="proposalYes()" class="no-swipe">❤️ Mauu</button>
-</div>
-</div>
+  <button onclick="next()" class="no-swipe">➡ Lanjut</button>
 </div>
 
 <audio id="music" src="music.mp3"></audio>
@@ -238,5 +223,6 @@ function proposalYes(){
 </script>
 </body>
 </html>
+
 
 
