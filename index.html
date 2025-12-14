@@ -16,12 +16,31 @@ body{background:#000;color:#fff;overflow:hidden;display:flex;flex-direction:colu
 button{padding:12px 25px;border:none;border-radius:30px;background:var(--p);color:#fff;font-size:15px;cursor:pointer;transition:0.2s}
 button:hover{opacity:0.9}
 
+/* MAINTENANCE */
+#maintenance{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  height:100vh;
+  background:#111;
+  color:#ff2e63;
+  font-size:24px;
+  position:relative;
+  overflow:hidden;
+}
+#countdown{
+  font-size:40px;
+  margin-top:20px;
+  font-weight:bold;
+  letter-spacing:2px;
+  text-shadow:0 0 10px #ff2e63,0 0 20px #ff9a9e;
+}
+
 /* SLIDER */
 .slider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory}
 .slider img{width:220px;height:220px;border-radius:20px;margin:10px;object-fit:cover;scroll-snap-align:center}
-
-/* FIREWORK */
-canvas{position:fixed;inset:0;pointer-events:none}
 
 /* HEART */
 .heart{position:absolute;color:var(--p);animation:fall linear infinite}
@@ -81,11 +100,18 @@ canvas{position:fixed;inset:0;pointer-events:none}
 </head>
 
 <body>
-<div class="bg"></div>
+
 <canvas id="fx"></canvas>
 
+<!-- MAINTENANCE -->
+<div id="maintenance">
+  <h1>🔧 Website Sedang Maintenance 🔧</h1>
+  <p>Halaman ini akan dibuka pada tanggal 27 Desember pukul 00:00 WIB</p>
+  <div id="countdown">00:00:00:00</div>
+</div>
+
 <!-- HERO -->
-<div class="page active" id="hero">
+<div class="page" id="hero">
   <div class="card">
     <h1>🎂 Happy Birthday</h1>
     <h2>💖 SAYAANGKUU 💖</h2>
@@ -146,8 +172,8 @@ canvas{position:fixed;inset:0;pointer-events:none}
   </div>
 </div>
 
-  <!-- UCAPAN TERIMA KASIH -->
-<div class="page" id="final">
+<!-- UCAPAN TERIMA KASIH -->
+<div class="page" id="proposalEnd">
   <div class="card">
     <h1>TERIMA KASIH SAYAANG</h1>
     <p>TERIMA KASIH UDAH MAU BUKA WEB INI</p>
@@ -163,46 +189,53 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <audio id="music" src="music.mp3"></audio>
 
 <script>
+// MAINTENANCE COUNTDOWN
+const maintenanceDiv = document.getElementById("maintenance");
+const countdownEl = document.getElementById("countdown");
 const pages = document.querySelectorAll(".page");
 let i = 0;
+const maintenanceEnd = new Date("2025-12-27T00:00:00+07:00");
+
+function checkMaintenance(){
+    const now = new Date();
+    if(now < maintenanceEnd){
+        maintenanceDiv.style.display = "flex";
+        pages.forEach(p=>p.style.display="none");
+        const diff = maintenanceEnd - now;
+        const days = Math.floor(diff / (1000*60*60*24));
+        const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+        const mins = Math.floor((diff%(1000*60*60))/(1000*60));
+        const secs = Math.floor((diff%(1000*60))/1000);
+        countdownEl.innerHTML = `${days.toString().padStart(2,'0')} : ${hours.toString().padStart(2,'0')} : ${mins.toString().padStart(2,'0')} : ${secs.toString().padStart(2,'0')}`;
+    } else {
+        maintenanceDiv.style.display = "none";
+        pages.forEach(p=>p.style.display="none");
+        pages[0].classList.add("active");
+    }
+}
+checkMaintenance();
+setInterval(checkMaintenance,1000);
 
 /* NEXT & PREV */
-function next(){
-    pages[i].classList.remove("active");
-    i++;
-    if(i >= pages.length) i = pages.length - 1;
-    pages[i].classList.add("active");
-}
-function prev(){
-    pages[i].classList.remove("active");
-    i--;
-    if(i < 0) i = 0;
-    pages[i].classList.add("active");
-}
+function next(){pages[i].classList.remove("active");i++;if(i>=pages.length)i=pages.length-1;pages[i].classList.add("active");}
+function prev(){pages[i].classList.remove("active");i--;if(i<0)i=0;pages[i].classList.add("active");}
 
 /* COUNTDOWN HARI ULANG TAHUN */
 const t = new Date("2025-12-27");
 setInterval(()=>{
     const now = new Date();
     const diff = t - now;
-    document.getElementById("count").innerHTML = diff<=0 ? "Selamat Ulang Tahun Yaa Sayang" : Math.floor(diff/86400000)+" hari lagi 💕";
+    const countEl = document.getElementById("count");
+    if(countEl) countEl.innerHTML = diff<=0 ? "Selamat Ulang Tahun Yaa Sayang" : Math.floor(diff/86400000)+" hari lagi 💕";
 },1000);
 
 /* SWIPE NAV - SAFE */
 let startX = 0;
-document.addEventListener("touchstart", e => {
-    if(!e.target.classList.contains("no-swipe")) startX = e.touches[0].clientX;
-});
-document.addEventListener("touchend", e => {
-    if(!e.target.classList.contains("no-swipe")){
-        const endX = e.changedTouches[0].clientX;
-        if(startX - endX > 50) next();
-        if(startX - endX < -50) prev();
-    }
-});
+document.addEventListener("touchstart", e => {if(!e.target.classList.contains("no-swipe")) startX = e.touches[0].clientX;});
+document.addEventListener("touchend", e => {if(!e.target.classList.contains("no-swipe")){const endX = e.changedTouches[0].clientX;if(startX - endX > 50) next();if(startX - endX < -50) prev();}});
 
 /* MUSIC */
-function music(){document.getElementById("music").play()}
+function music(){document.getElementById("music").play();}
 
 /* HEART CONFETTI */
 setInterval(()=>{
@@ -217,22 +250,33 @@ setInterval(()=>{
 
 /* FIREWORKS 3D */
 const c = document.getElementById("fx"), ctx = c.getContext("2d");
-function resize(){c.width = innerWidth; c.height = innerHeight;}
-window.onresize = resize; resize();
+function resize(){c.width=innerWidth;c.height=innerHeight;}
+window.onresize=resize;resize();
 let particles = [];
-function firework(){for(let j=0;j<50;j++){
-    particles.push({x:Math.random()*c.width, y:Math.random()*c.height, dx:(Math.random()-0.5)*5, dy:(Math.random()-0.5)*5, life:Math.random()*50});
-}}
-setInterval(()=>{
-    ctx.clearRect(0,0,c.width,c.height);
-    particles.forEach((p,index)=>{
-        ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
-        ctx.fillRect(p.x,p.y,3,3);
-        p.x += p.dx; p.y += p.dy; p.life--;
-        if(p.life<=0) particles.splice(index,1);
-    });
-},30);
+function firework(){for(let j=0;j<50;j++){particles.push({x:Math.random()*c.width,y:Math.random()*c.height,dx:(Math.random()-0.5)*5,dy:(Math.random()-0.5)*5,life:Math.random()*50});}}
+setInterval(()=>{ctx.clearRect(0,0,c.width,c.height);particles.forEach((p,index)=>{ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;ctx.fillRect(p.x,p.y,3,3);p.x+=p.dx;p.y+=p.dy;p.life--;if(p.life<=0)particles.splice(index,1);});},30);
 setInterval(firework,800);
+
+/* CONFETTI MAINTENANCE */
+function confettiMaintenance(){
+    const conf = document.createElement("div");
+    conf.innerHTML = ["🎉","✨","🎊","💖"][Math.floor(Math.random()*4)];
+    conf.style.position = "absolute";
+    conf.style.fontSize = (20+Math.random()*30)+"px";
+    conf.style.left = Math.random()*100+"%";
+    conf.style.top = "100%";
+    conf.style.opacity = Math.random();
+    conf.style.zIndex = 10;
+    maintenanceDiv.appendChild(conf);
+    let pos = 100;
+    const interval = setInterval(()=>{
+        pos -= 2 + Math.random()*3;
+        conf.style.top = pos+"%";
+        conf.style.opacity -= 0.01;
+        if(pos<0){conf.remove(); clearInterval(interval);}
+    },20);
+}
+setInterval(confettiMaintenance,200);
 
 /* GIFT VIDEO */
 const giftBtn = document.getElementById("giftBtn");
@@ -282,6 +326,7 @@ noBtn.addEventListener("mouseenter", ()=>{
 </script>
 </body>
 </html>
+
 
 
 
