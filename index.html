@@ -13,7 +13,7 @@ body{background:#000;color:#fff;overflow:hidden}
 .page{width:100vw;height:100vh;display:none;align-items:center;justify-content:center;text-align:center;padding:20px}
 .active{display:flex}
 .card{background:var(--card);backdrop-filter:blur(16px);padding:25px;border-radius:25px;max-width:420px;width:100%}
-button{margin-top:20px;padding:12px 30px;border:none;border-radius:30px;background:var(--p);color:#fff;font-size:15px;cursor:pointer}
+button{margin-top:15px;padding:12px 30px;border:none;border-radius:30px;background:var(--p);color:#fff;font-size:15px;cursor:pointer}
 
 /* SLIDER */
 .slider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory}
@@ -34,6 +34,12 @@ canvas{position:fixed;inset:0;pointer-events:none}
 
 /* FACE SCAN SIMULATION */
 #faceScan{width:200px;height:200px;margin:auto;background:#111;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:16px;letter-spacing:1px}
+
+/* LETTER GLOW */
+.letter-card p.glow-text{
+  color:#ff2e63;
+  text-shadow:0 0 5px #ff2e63,0 0 10px #ff9a9e,0 0 20px #ff2e63;
+}
 </style>
 </head>
 
@@ -41,8 +47,21 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <div class="bg"></div>
 <canvas id="fx"></canvas>
 
+<!-- MAINTENANCE PAGE -->
+<div class="page" id="maintenance">
+  <div class="card">
+    <h1>⚠️ HARAP TUNGGU ⚠️</h1>
+    <p style="color:#ff2e63; font-weight:bold; text-shadow:0 0 10px #ff2e63, 0 0 20px #ff9a9e;">
+      WEBSITE SAAT INI SEDANG DI TUTUP,<br>
+      HARAP KEMBALI LAGI PADA WAKTU YANG SUDAH DI TETAPKAN
+    </p>
+    <p id="maintCountdown"></p>
+    <p>~Hendra</p>
+  </div>
+</div>
+
 <!-- LOCK - FACE SCAN SIMULATION -->
-<div class="page active" id="lock">
+<div class="page" id="lock">
 <div class="card">
 <h2>Verifikasi Wajah</h2>
 <div id="faceScan">🔍Scan Wajah Sayang</div><br>
@@ -56,7 +75,7 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <h1>🎂 Happy Birthday</h1>
 <h2>💖 SAYAANGKUU 💖</h2>
 <p id="count"></p>
-<p>Swipe ➜</p>
+<button onclick="next()" class="no-swipe">➡ Lanjut</button>
 </div>
 </div>
 
@@ -69,7 +88,7 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <img src="photo2.jpg" class="no-swipe">
 <img src="photo3.jpg" class="no-swipe">
 </div>
-<p>Swipe ➜</p>
+<button onclick="next()" class="no-swipe">➡ Lanjut</button>
 </div>
 </div>
 
@@ -86,7 +105,7 @@ canvas{position:fixed;inset:0;pointer-events:none}
       sehat sehat yaa sayaang aku akan selalu ada di sampingmu di saat kamu sedih ataupun bahagia<br>
       <strong>AKU SAYANG KAMU SELAMANYAAAAAAAAAA❤️</strong>
     </p>
-    <p>Swipe ➜</p>
+    <button onclick="next()" class="no-swipe">➡ Lanjut</button>
   </div>
 </div>
 
@@ -99,6 +118,7 @@ canvas{position:fixed;inset:0;pointer-events:none}
   <source src="https://files.catbox.moe/kla6mz.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
+<button onclick="next()" class="no-swipe">➡ Lanjut</button>
 </div>
 </div>
 
@@ -117,14 +137,43 @@ canvas{position:fixed;inset:0;pointer-events:none}
 const pages = document.querySelectorAll(".page");
 let i = 0;
 
-/* PASSWORD / FACE SIMULATION */
+// ---------- RUNTIME MAINTENANCE ----------
+const maintenanceEnd = new Date("2025-12-27T00:00:00+07:00");
+const now = new Date();
+
+if(now < maintenanceEnd){
+  // sembunyikan semua halaman lain
+  pages.forEach(p => p.classList.remove("active"));
+  // tampilkan halaman maintenance
+  document.getElementById("maintenance").classList.add("active");
+
+  // countdown untuk maintenance
+  function updateMaintCountdown(){
+    const now = new Date();
+    const diff = maintenanceEnd - now;
+    if(diff <= 0){
+      location.reload(); // buka halaman utama
+      return;
+    }
+    const days = Math.floor(diff/(1000*60*60*24));
+    const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+    const minutes = Math.floor((diff%(1000*60*60))/(1000*60));
+    const seconds = Math.floor((diff%(1000*60))/1000);
+    document.getElementById("maintCountdown").innerHTML =
+      `Website akan dibuka dalam: ${days} hari ${hours} jam ${minutes} menit ${seconds} detik`;
+  }
+  setInterval(updateMaintCountdown,1000);
+  updateMaintCountdown();
+}
+
+// ---------- PASSWORD / FACE SIMULATION ----------
 function unlock(){
     const scan = document.getElementById("faceScan");
     scan.textContent = "Memindai wajah...";
     setTimeout(()=>next(),3000);
 }
 
-/* NEXT */
+// ---------- NEXT PAGE ----------
 function next(){
     pages[i].classList.remove("active");
     i++;
@@ -132,7 +181,7 @@ function next(){
     pages[i].classList.add("active");
 }
 
-/* COUNTDOWN */
+// ---------- COUNTDOWN HARI ULANG TAHUN ----------
 const t = new Date("2025-12-27");
 setInterval(()=>{
     const now = new Date();
@@ -140,23 +189,22 @@ setInterval(()=>{
     document.getElementById("count").innerHTML = diff<=0 ? "Selamat Ulang Tahun Yaa Sayang" : Math.floor(diff/86400000)+" hari lagi 💕";
 },1000);
 
-/* SWIPE NAV - SAFE */
+// ---------- SWIPE NAV - SAFE ----------
 let startX = 0;
 document.addEventListener("touchstart", e => {
     if(!e.target.classList.contains("no-swipe")) startX = e.touches[0].clientX;
 });
-
 document.addEventListener("touchend", e => {
-    if(!e.target.classList.contains("no-swipe")) {
+    if(!e.target.classList.contains("no-swipe")){
         const endX = e.changedTouches[0].clientX;
-        if(startX - endX > 50) next(); // swipe kiri
+        if(startX - endX > 50) next();
     }
 });
 
-/* MUSIC */
+// ---------- MUSIC ----------
 function music(){document.getElementById("music").play()}
 
-/* HEART CONFETTI */
+// ---------- HEART CONFETTI ----------
 setInterval(()=>{
     const h = document.createElement("div");
     h.className = "heart";
@@ -167,16 +215,14 @@ setInterval(()=>{
     setTimeout(()=>h.remove(),8000);
 },300);
 
-/* FIREWORKS 3D */
+// ---------- FIREWORKS 3D ----------
 const c = document.getElementById("fx"), ctx = c.getContext("2d");
 function resize(){c.width = innerWidth; c.height = innerHeight;}
 window.onresize = resize; resize();
-
 let particles = [];
 function firework(){for(let j=0;j<50;j++){
     particles.push({x:Math.random()*c.width, y:Math.random()*c.height, dx:(Math.random()-0.5)*5, dy:(Math.random()-0.5)*5, life:Math.random()*50});
 }}
-
 setInterval(()=>{
     ctx.clearRect(0,0,c.width,c.height);
     particles.forEach((p,index)=>{
@@ -186,15 +232,14 @@ setInterval(()=>{
         if(p.life<=0) particles.splice(index,1);
     });
 },30);
-
 setInterval(firework,800);
 
-/* GIFT VIDEO */
+// ---------- GIFT VIDEO ----------
 function openGift(){
     document.getElementById("giftVideo").style.display="block";
 }
 
-/* PROPOSAL YES */
+// ---------- PROPOSAL YES ----------
 function proposalYes(){
     alert("Aku bakal sayang terus sama kamuuuu");
     next();
@@ -202,3 +247,4 @@ function proposalYes(){
 </script>
 </body>
 </html>
+
