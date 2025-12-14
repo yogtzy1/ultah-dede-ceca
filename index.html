@@ -6,15 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-:root{--p:#ff2e63;--s:#ff9a9e;--bg:#0b0014;--card:rgba(255,255,255,.08)}
+:root{
+  --p:#ff2e63;
+  --s:#ff9a9e;
+  --bg:#0b0014;
+  --card:rgba(255,255,255,.08)
+}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
 body{background:#000;color:#fff;overflow:hidden;display:flex;flex-direction:column;height:100vh}
-.bg{position:fixed;inset:0;background:url(bg.jpg) center/cover;filter:blur(25px);opacity:.4;z-index:-1}
-.page{flex:1;width:100vw;display:none;align-items:center;justify-content:center;text-align:center;padding:20px;position:relative}
-.active{display:flex}
-.card{background:var(--card);backdrop-filter:blur(16px);padding:25px;border-radius:25px;max-width:420px;width:100%;position:relative;z-index:1}
-button{padding:12px 25px;border:none;border-radius:30px;background:var(--p);color:#fff;font-size:15px;cursor:pointer;transition:0.2s}
-button:hover{opacity:0.9}
 
 /* MAINTENANCE */
 #maintenance{
@@ -24,10 +23,14 @@ button:hover{opacity:0.9}
   align-items:center;
   text-align:center;
   height:100vh;
+  width:100vw;
   background:#111;
-  color:#ff2e63;
+  color:var(--p);
   font-size:24px;
-  position:relative;
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:50;
   overflow:hidden;
 }
 #countdown{
@@ -35,24 +38,33 @@ button:hover{opacity:0.9}
   margin-top:20px;
   font-weight:bold;
   letter-spacing:2px;
-  text-shadow:0 0 10px #ff2e63,0 0 20px #ff9a9e;
+  text-shadow:0 0 10px var(--p),0 0 20px var(--s);
 }
+
+/* CONFETTI */
+.confetti{
+  position:absolute;
+  font-size:20px;
+  animation:fall 3s linear forwards;
+}
+@keyframes fall{
+  0%{transform:translateY(0) rotate(0deg);}
+  100%{transform:translateY(-200px) rotate(360deg); opacity:0;}
+}
+
+/* BACKGROUND & PAGES */
+.bg{position:fixed;inset:0;background:url(bg.jpg) center/cover;filter:blur(25px);opacity:.4;z-index:-1}
+.page{flex:1;width:100vw;display:none;align-items:center;justify-content:center;text-align:center;padding:20px;position:relative}
+.active{display:flex}
+.card{background:var(--card);backdrop-filter:blur(16px);padding:25px;border-radius:25px;max-width:420px;width:100%;position:relative;z-index:1}
+button{padding:12px 25px;border:none;border-radius:30px;background:var(--p);color:#fff;font-size:15px;cursor:pointer;transition:0.2s}
+button:hover{opacity:0.9}
 
 /* SLIDER */
 .slider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory}
 .slider img{width:220px;height:220px;border-radius:20px;margin:10px;object-fit:cover;scroll-snap-align:center}
 
-/* HEART */
-.heart{position:absolute;color:var(--p);animation:fall linear infinite}
-@keyframes fall{from{transform:translateY(-10vh)}to{transform:translateY(110vh)}}
-
-/* LETTER GLOW */
-.letter-card p.glow-text{
-  color:#ff2e63;
-  text-shadow:0 0 5px #ff2e63,0 0 10px #ff9a9e,0 0 20px #ff2e63;
-}
-
-/* NAVIGATION BUTTONS FIXED BAWAH */
+/* NAV BUTTONS FIXED */
 .nav-buttons{
   position:fixed;
   bottom:20px;
@@ -89,29 +101,33 @@ button:hover{opacity:0.9}
   position:absolute;
   color:#ff2e63;
   font-size:24px;
-  animation:fallFinal 3s linear forwards;
+  animation:fall 3s linear forwards;
   pointer-events:none;
 }
-@keyframes fallFinal{
-  0%{transform:translateY(0) rotate(0deg);}
-  100%{transform:translateY(-200px) rotate(360deg);opacity:0;}
+
+/* VIDEO BUTTON */
+#giftBtn{
+  padding:15px 30px; 
+  font-size:24px; 
+  border-radius:50%; 
+  cursor:pointer;
+  margin:20px 0;
 }
 </style>
 </head>
 
 <body>
-
+<div class="bg"></div>
 <canvas id="fx"></canvas>
 
 <!-- MAINTENANCE -->
 <div id="maintenance">
-  <h1>🔧 Website Sedang Maintenance 🔧</h1>
-  <p>Halaman ini akan dibuka pada tanggal 27 Desember pukul 00:00 WIB</p>
-  <div id="countdown">00:00:00:00</div>
+  <h1>Website Sedang Maintenance</h1>
+  <p id="countdown"></p>
 </div>
 
 <!-- HERO -->
-<div class="page" id="hero">
+<div class="page active" id="hero">
   <div class="card">
     <h1>🎂 Happy Birthday</h1>
     <h2>💖 SAYAANGKUU 💖</h2>
@@ -151,8 +167,8 @@ button:hover{opacity:0.9}
 <div class="page" id="gift">
   <div class="card">
     <h2>🎁 Hadiah Buat kamuuu sayaangg</h2>
-    <div style="text-align:center; margin:20px 0;">
-      <button id="giftBtn" style="padding:15px 30px; font-size:24px; border-radius:50%; cursor:pointer;">🎁</button>
+    <div style="text-align:center;">
+      <button id="giftBtn">🎁</button>
     </div>
     <video id="giftVideo" controls style="display:none; width:100%; border-radius:15px; margin-top:20px;">
       <source src="https://files.catbox.moe/kla6mz.mp4" type="video/mp4">
@@ -172,15 +188,15 @@ button:hover{opacity:0.9}
   </div>
 </div>
 
-<!-- UCAPAN TERIMA KASIH -->
-<div class="page" id="proposalEnd">
+<!-- TERIMA KASIH -->
+<div class="page" id="thank">
   <div class="card">
     <h1>TERIMA KASIH SAYAANG</h1>
     <p>TERIMA KASIH UDAH MAU BUKA WEB INI</p>
   </div>
 </div>
 
-<!-- NAV BUTTONS FIXED -->
+<!-- NAV BUTTONS -->
 <div class="nav-buttons">
   <button onclick="prev()" class="no-swipe">⬅ Kembali</button>
   <button onclick="next()" class="no-swipe">➡ Lanjut</button>
@@ -189,53 +205,80 @@ button:hover{opacity:0.9}
 <audio id="music" src="music.mp3"></audio>
 
 <script>
-// MAINTENANCE COUNTDOWN
-const maintenanceDiv = document.getElementById("maintenance");
-const countdownEl = document.getElementById("countdown");
 const pages = document.querySelectorAll(".page");
 let i = 0;
-const maintenanceEnd = new Date("2025-12-27T00:00:00+07:00");
+
+// MAINTENANCE SETUP
+const maintenanceDiv = document.getElementById("maintenance");
+const countdownEl = document.getElementById("countdown");
+const maintenanceEnd = new Date("2025-12-27T00:00:00"); // sampai 27 Desember 00:00 WIB
 
 function checkMaintenance(){
     const now = new Date();
     if(now < maintenanceEnd){
         maintenanceDiv.style.display = "flex";
-        pages.forEach(p=>p.style.display="none");
+        pages.forEach(p=>p.classList.remove("active"));
         const diff = maintenanceEnd - now;
         const days = Math.floor(diff / (1000*60*60*24));
         const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
         const mins = Math.floor((diff%(1000*60*60))/(1000*60));
         const secs = Math.floor((diff%(1000*60))/1000);
         countdownEl.innerHTML = `${days.toString().padStart(2,'0')} : ${hours.toString().padStart(2,'0')} : ${mins.toString().padStart(2,'0')} : ${secs.toString().padStart(2,'0')}`;
+
+        // Confetti animasi
+        const conf = document.createElement("div");
+        conf.className="confetti";
+        conf.innerHTML="🎉";
+        conf.style.left=Math.random()*100+"vw";
+        conf.style.top="100vh";
+        document.body.appendChild(conf);
+        setTimeout(()=>conf.remove(),3000);
     } else {
-        maintenanceDiv.style.display = "none";
+        maintenanceDiv.style.display="none";
         pages.forEach(p=>p.style.display="none");
         pages[0].classList.add("active");
     }
 }
-checkMaintenance();
 setInterval(checkMaintenance,1000);
+checkMaintenance();
 
 /* NEXT & PREV */
-function next(){pages[i].classList.remove("active");i++;if(i>=pages.length)i=pages.length-1;pages[i].classList.add("active");}
-function prev(){pages[i].classList.remove("active");i--;if(i<0)i=0;pages[i].classList.add("active");}
+function next(){
+    pages[i].classList.remove("active");
+    i++;
+    if(i >= pages.length) i = pages.length - 1;
+    pages[i].classList.add("active");
+}
+function prev(){
+    pages[i].classList.remove("active");
+    i--;
+    if(i < 0) i = 0;
+    pages[i].classList.add("active");
+}
 
 /* COUNTDOWN HARI ULANG TAHUN */
 const t = new Date("2025-12-27");
 setInterval(()=>{
     const now = new Date();
     const diff = t - now;
-    const countEl = document.getElementById("count");
-    if(countEl) countEl.innerHTML = diff<=0 ? "Selamat Ulang Tahun Yaa Sayang" : Math.floor(diff/86400000)+" hari lagi 💕";
+    document.getElementById("count").innerHTML = diff<=0 ? "Selamat Ulang Tahun Yaa Sayang" : Math.floor(diff/86400000)+" hari lagi 💕";
 },1000);
 
 /* SWIPE NAV - SAFE */
 let startX = 0;
-document.addEventListener("touchstart", e => {if(!e.target.classList.contains("no-swipe")) startX = e.touches[0].clientX;});
-document.addEventListener("touchend", e => {if(!e.target.classList.contains("no-swipe")){const endX = e.changedTouches[0].clientX;if(startX - endX > 50) next();if(startX - endX < -50) prev();}});
+document.addEventListener("touchstart", e => {
+    if(!e.target.classList.contains("no-swipe")) startX = e.touches[0].clientX;
+});
+document.addEventListener("touchend", e => {
+    if(!e.target.classList.contains("no-swipe")){
+        const endX = e.changedTouches[0].clientX;
+        if(startX - endX > 50) next();
+        if(startX - endX < -50) prev();
+    }
+});
 
 /* MUSIC */
-function music(){document.getElementById("music").play();}
+function music(){document.getElementById("music").play()}
 
 /* HEART CONFETTI */
 setInterval(()=>{
@@ -250,33 +293,22 @@ setInterval(()=>{
 
 /* FIREWORKS 3D */
 const c = document.getElementById("fx"), ctx = c.getContext("2d");
-function resize(){c.width=innerWidth;c.height=innerHeight;}
-window.onresize=resize;resize();
+function resize(){c.width = innerWidth; c.height = innerHeight;}
+window.onresize = resize; resize();
 let particles = [];
-function firework(){for(let j=0;j<50;j++){particles.push({x:Math.random()*c.width,y:Math.random()*c.height,dx:(Math.random()-0.5)*5,dy:(Math.random()-0.5)*5,life:Math.random()*50});}}
-setInterval(()=>{ctx.clearRect(0,0,c.width,c.height);particles.forEach((p,index)=>{ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;ctx.fillRect(p.x,p.y,3,3);p.x+=p.dx;p.y+=p.dy;p.life--;if(p.life<=0)particles.splice(index,1);});},30);
+function firework(){for(let j=0;j<50;j++){
+    particles.push({x:Math.random()*c.width, y:Math.random()*c.height, dx:(Math.random()-0.5)*5, dy:(Math.random()-0.5)*5, life:Math.random()*50});
+}}
+setInterval(()=>{
+    ctx.clearRect(0,0,c.width,c.height);
+    particles.forEach((p,index)=>{
+        ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
+        ctx.fillRect(p.x,p.y,3,3);
+        p.x += p.dx; p.y += p.dy; p.life--;
+        if(p.life<=0) particles.splice(index,1);
+    });
+},30);
 setInterval(firework,800);
-
-/* CONFETTI MAINTENANCE */
-function confettiMaintenance(){
-    const conf = document.createElement("div");
-    conf.innerHTML = ["🎉","✨","🎊","💖"][Math.floor(Math.random()*4)];
-    conf.style.position = "absolute";
-    conf.style.fontSize = (20+Math.random()*30)+"px";
-    conf.style.left = Math.random()*100+"%";
-    conf.style.top = "100%";
-    conf.style.opacity = Math.random();
-    conf.style.zIndex = 10;
-    maintenanceDiv.appendChild(conf);
-    let pos = 100;
-    const interval = setInterval(()=>{
-        pos -= 2 + Math.random()*3;
-        conf.style.top = pos+"%";
-        conf.style.opacity -= 0.01;
-        if(pos<0){conf.remove(); clearInterval(interval);}
-    },20);
-}
-setInterval(confettiMaintenance,200);
 
 /* GIFT VIDEO */
 const giftBtn = document.getElementById("giftBtn");
@@ -290,12 +322,9 @@ giftBtn.addEventListener("click", ()=>{
 /* FINAL PROPOSAL INTERAKTIF */
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
-
-// WhatsApp template
-const nomorWA = "6285762184102"; // ganti nomor kamu
+const nomorWA = "6285762184102"; 
 const pesanWA = `Aku mau sama kamuu selamanya 💖`;
 
-// Klik "Mau ❤️"
 yesBtn.addEventListener("click", ()=>{
     for(let i=0;i<20;i++){
         const h = document.createElement("div");
@@ -309,7 +338,7 @@ yesBtn.addEventListener("click", ()=>{
     window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(pesanWA)}`,"_blank");
     setTimeout(()=>{
         pages[i].classList.remove("active");
-        document.getElementById("proposalEnd").classList.add("active");
+        document.getElementById("thank").classList.add("active");
     },3000);
 });
 
