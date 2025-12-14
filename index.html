@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Cheisya Siva Birthday & Proposal ❤️</title>
+<title>Happy Birthday</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -13,7 +13,7 @@ body{background:#000;color:#fff;overflow:hidden}
 .page{width:100vw;height:100vh;display:none;align-items:center;justify-content:center;text-align:center;padding:20px}
 .active{display:flex}
 .card{background:var(--card);backdrop-filter:blur(16px);padding:25px;border-radius:25px;max-width:420px;width:100%}
-button{margin-top:20px;padding:12px 30px;border:none;border-radius:30px;background:var(--p);color:#fff;font-size:15px}
+button{margin-top:20px;padding:12px 30px;border:none;border-radius:30px;background:var(--p);color:#fff;font-size:15px;cursor:pointer}
 
 /* SLIDER */
 .slider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory}
@@ -44,9 +44,9 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <!-- LOCK - FACE SCAN SIMULATION -->
 <div class="page active" id="lock">
 <div class="card">
-<h2>🔒 Verifikasi Wajah</h2>
-<div id="faceScan">🔍 Scan Wajah Cheisya</div><br>
-<button onclick="unlock()">Mulai</button>
+<h2>Verifikasi Wajah</h2>
+<div id="faceScan">🔍Scan Wajah Sayang</div><br>
+<button class="no-swipe" onclick="unlock()">Mulai</button>
 </div>
 </div>
 
@@ -63,11 +63,11 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <!-- GALLERY -->
 <div class="page" id="gallery">
 <div class="card">
-<h2>📸 Kenangan Kita</h2>
+<h2>Picture Kenangan Kita</h2>
 <div class="slider">
-<img src="photo1.jpg">
-<img src="photo2.jpg">
-<img src="photo3.jpg">
+<img src="photo1.jpg" class="no-swipe">
+<img src="photo2.jpg" class="no-swipe">
+<img src="photo3.jpg" class="no-swipe">
 </div>
 <p>Swipe ➜</p>
 </div>
@@ -86,8 +86,8 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <div class="page" id="gift">
 <div class="card">
 <h2>🎁 Hadiah Untukmu</h2>
-<div class="gift" onclick="openGift()"></div>
-<video id="giftVideo" width="100%" controls style="display:none">
+<div class="gift no-swipe" onclick="openGift()"></div>
+<video id="giftVideo" width="100%" controls class="no-swipe" style="display:none">
 <source src="gift.mp4" type="video/mp4">
 </video>
 </div>
@@ -98,76 +98,100 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <div class="card">
 <h1>💍 Will You Marry Me? 💖</h1>
 <p>Cheisya, maukah kamu melanjutkan hidup bersamaku selamanya?</p>
-<button onclick="proposalYes()">YES ❤️</button>
+<button class="no-swipe" onclick="proposalYes()">YES ❤️</button>
 </div>
 </div>
 
 <audio id="music" src="music.mp3"></audio>
 
 <script>
-const pages=document.querySelectorAll(".page");let i=0;
+const pages = document.querySelectorAll(".page");
+let i = 0;
 
 /* PASSWORD / FACE SIMULATION */
 function unlock(){
-const scan=document.getElementById("faceScan");
-scan.textContent="Memindai wajah...";
-setTimeout(()=>next(),3000)
+    const scan = document.getElementById("faceScan");
+    scan.textContent = "Memindai wajah...";
+    setTimeout(()=>next(),3000);
 }
 
 /* NEXT */
-function next(){pages[i].classList.remove("active");i++;pages[i].classList.add("active")}
+function next(){
+    pages[i].classList.remove("active");
+    i++;
+    if(i >= pages.length) i = pages.length - 1;
+    pages[i].classList.add("active");
+}
 
 /* COUNTDOWN */
-const t=new Date("2025-12-27");
+const t = new Date("2025-12-27");
 setInterval(()=>{
-const now=new Date();
-const diff=t-now;
-document.getElementById("count").innerHTML=diff<=0?"🎉 Selamat Ulang Tahun Cheisya ❤️":Math.floor(diff/86400000)+" hari lagi 💕";
-},1000)
+    const now = new Date();
+    const diff = t - now;
+    document.getElementById("count").innerHTML = diff<=0 ? "🎉 Selamat Ulang Tahun Cheisya Sayang" : Math.floor(diff/86400000)+" hari lagi 💕";
+},1000);
 
-/* SWIPE NAV */
-let x=0;
-document.addEventListener("touchstart",e=>x=e.touches[0].clientX)
-document.addEventListener("touchend",e=>{
-if(x-e.changedTouches[0].clientX>50)next();
-})
+/* SWIPE NAV - SAFE */
+let startX = 0;
+document.addEventListener("touchstart", e => {
+    if(!e.target.classList.contains("no-swipe")) startX = e.touches[0].clientX;
+});
+
+document.addEventListener("touchend", e => {
+    if(!e.target.classList.contains("no-swipe")) {
+        const endX = e.changedTouches[0].clientX;
+        if(startX - endX > 50) next(); // swipe kiri
+    }
+});
 
 /* MUSIC */
 function music(){document.getElementById("music").play()}
 
 /* HEART CONFETTI */
 setInterval(()=>{
-const h=document.createElement("div");
-h.className="heart";h.innerHTML="❤️";
-h.style.left=Math.random()*100+"vw";
-h.style.animationDuration=3+Math.random()*5+"s";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),8000)
-},300)
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "❤️";
+    h.style.left = Math.random()*100+"vw";
+    h.style.animationDuration = 3+Math.random()*5+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),8000);
+},300);
 
 /* FIREWORKS 3D */
-const c=document.getElementById("fx"),ctx=c.getContext("2d");
-function resize(){c.width=innerWidth;c.height=innerHeight}
-window.onresize=resize;resize();
-let particles=[];
-function firework(){for(let i=0;i<50;i++){particles.push({x:Math.random()*c.width,y:Math.random()*c.height,dx:(Math.random()-0.5)*5,dy:(Math.random()-0.5)*5,life:Math.random()*50})}}
+const c = document.getElementById("fx"), ctx = c.getContext("2d");
+function resize(){c.width = innerWidth; c.height = innerHeight;}
+window.onresize = resize; resize();
+
+let particles = [];
+function firework(){for(let j=0;j<50;j++){
+    particles.push({x:Math.random()*c.width, y:Math.random()*c.height, dx:(Math.random()-0.5)*5, dy:(Math.random()-0.5)*5, life:Math.random()*50});
+}}
+
 setInterval(()=>{
-ctx.clearRect(0,0,c.width,c.height);
-particles.forEach((p,index)=>{
-ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
-ctx.fillRect(p.x,p.y,3,3);
-p.x+=p.dx;p.y+=p.dy;p.life--;
-if(p.life<=0)particles.splice(index,1)
-})
-},30)
-setInterval(firework,800)
+    ctx.clearRect(0,0,c.width,c.height);
+    particles.forEach((p,index)=>{
+        ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
+        ctx.fillRect(p.x,p.y,3,3);
+        p.x += p.dx; p.y += p.dy; p.life--;
+        if(p.life<=0) particles.splice(index,1);
+    });
+},30);
+
+setInterval(firework,800);
 
 /* GIFT VIDEO */
-function openGift(){document.getElementById("giftVideo").style.display="block";}
+function openGift(){
+    document.getElementById("giftVideo").style.display="block";
+}
 
 /* PROPOSAL YES */
-function proposalYes(){alert("💖 Cheisya Siva, aku mencintaimu selamanya! 💖");next();}
+function proposalYes(){
+    alert("💖 Cheisya Siva, aku mencintaimu selamanya! 💖");
+    next();
+}
 </script>
-
 </body>
 </html>
+
+
