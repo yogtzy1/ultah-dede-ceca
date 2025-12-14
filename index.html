@@ -52,6 +52,38 @@ canvas{position:fixed;inset:0;pointer-events:none}
   gap:10px;
   z-index:20;
 }
+
+/* FINAL CHOICE BUTTONS */
+.choice-buttons{
+  margin-top:20px;
+  display:flex;
+  justify-content:center;
+  gap:15px;
+}
+.choice-buttons button{
+  padding:12px 28px;
+  border:none;
+  border-radius:30px;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.2s;
+}
+.choice-buttons .yes{background:#ff2e63;color:#fff;}
+.choice-buttons .no{background:#444;color:#fff;}
+.choice-buttons button:hover{transform:scale(1.05);}
+
+/* HEART CONFETTI FINAL */
+.final-heart{
+  position:absolute;
+  color:#ff2e63;
+  font-size:24px;
+  animation:fallFinal 3s linear forwards;
+  pointer-events:none;
+}
+@keyframes fallFinal{
+  0%{transform:translateY(0) rotate(0deg);}
+  100%{transform:translateY(-200px) rotate(360deg);opacity:0;}
+}
 </style>
 </head>
 
@@ -59,7 +91,7 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <div class="bg"></div>
 <canvas id="fx"></canvas>
 
-<!-- LOCK - FACE SCAN SIMULATION -->
+<!-- LOCK -->
 <div class="page active" id="lock">
 <div class="card">
 <h2>Verifikasi Wajah</h2>
@@ -117,10 +149,22 @@ canvas{position:fixed;inset:0;pointer-events:none}
 
 <!-- FINAL PROPOSAL -->
 <div class="page" id="final">
-<div class="card">
-<h1>Do you want to be with me forever?</h1>
-<p>SAYAANGGG, apa kamu mau sama aku selamanya?</p>
+  <div class="card">
+    <h1>Do you want to be with me forever?</h1>
+    <p>SAYAANGGG, apa kamu mau sama aku selamanya?</p>
+    <div class="choice-buttons">
+      <button class="yes" id="yesBtn">Mau ❤️</button>
+      <button class="no" id="noBtn">Tidak 💔</button>
+    </div>
+  </div>
 </div>
+
+<!-- HALAMAN LAMARAN ROMANTIS -->
+<div class="page" id="proposalEnd">
+  <div class="card">
+    <h1>💍 Aku akan selalu menjagamu 💖</h1>
+    <p>Cheisya, selamanya kita bersama...</p>
+  </div>
 </div>
 
 <!-- NAV BUTTONS FIXED -->
@@ -215,11 +259,46 @@ function openGift(){
     document.getElementById("giftVideo").style.display="block";
 }
 
-/* PROPOSAL YES */
-function proposalYes(){
-    alert("Aku bakal sayang terus sama kamuuuu");
-    next();
-}
+/* FINAL PROPOSAL INTERAKTIF */
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+
+// WhatsApp template
+const nomorWA = "6285762184102"; // ganti dengan nomor kamu
+const nama = "Cheisya";
+const tanggal = new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'});
+
+// Klik "Mau ❤️"
+yesBtn.addEventListener("click", ()=>{
+    for(let i=0;i<20;i++){
+        const h = document.createElement("div");
+        h.className = "final-heart";
+        h.innerHTML = "❤️";
+        h.style.left = Math.random()*80 + "vw";
+        h.style.top = "80vh";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),3000);
+    }
+    const pesan = `Aku mau sama kamuu\nHai ${nama}, hari ini tanggal ${tanggal} selamanya 💖`;
+    const url = `https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`;
+    window.open(url,"_blank");
+
+    setTimeout(()=>{
+        pages[i].classList.remove("active");
+        document.getElementById("proposalEnd").classList.add("active");
+    },3000);
+});
+
+// Klik "Tidak 💔" → kabur
+noBtn.addEventListener("mouseenter", ()=>{
+    const maxX = window.innerWidth - noBtn.offsetWidth;
+    const maxY = window.innerHeight - noBtn.offsetHeight;
+    const randX = Math.floor(Math.random() * maxX);
+    const randY = Math.floor(Math.random() * maxY);
+    noBtn.style.position = "absolute";
+    noBtn.style.left = randX + "px";
+    noBtn.style.top = randY + "px";
+});
 </script>
 </body>
 </html>
