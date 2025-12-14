@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Cheisya Siva Birthday & Proposal ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{--p:#ff2e63;--s:#ff9a9e;--bg:#0b0014;--card:rgba(255,255,255,.08)}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
+body{background:#000;color:#fff;overflow:hidden}
+.bg{position:fixed;inset:0;background:url(bg.jpg) center/cover;filter:blur(25px);opacity:.4;z-index:-1}
+.page{width:100vw;height:100vh;display:none;align-items:center;justify-content:center;text-align:center;padding:20px}
+.active{display:flex}
+.card{background:var(--card);backdrop-filter:blur(16px);padding:25px;border-radius:25px;max-width:420px;width:100%}
+button{margin-top:20px;padding:12px 30px;border:none;border-radius:30px;background:var(--p);color:#fff;font-size:15px}
+
+/* SLIDER */
+.slider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory}
+.slider img{width:220px;height:220px;border-radius:20px;margin:10px;object-fit:cover;scroll-snap-align:center}
+.dots span{display:inline-block;width:8px;height:8px;background:#fff;border-radius:50%;margin:5px;opacity:.4}
+.dots .on{opacity:1}
+
+/* FIREWORK */
+canvas{position:fixed;inset:0;pointer-events:none}
+
+/* HEART */
+.heart{position:absolute;color:var(--p);animation:fall linear infinite}
+@keyframes fall{from{transform:translateY(-10vh)}to{transform:translateY(110vh)}}
+
+/* GIFT */
+.gift{width:120px;height:120px;margin:auto;background:var(--p);border-radius:15px;position:relative;cursor:pointer}
+.gift:before{content:"🎁";font-size:60px;line-height:120px}
+
+/* FACE SCAN SIMULATION */
+#faceScan{width:200px;height:200px;margin:auto;background:#111;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:16px;letter-spacing:1px}
+</style>
+</head>
+
+<body>
+<div class="bg"></div>
+<canvas id="fx"></canvas>
+
+<!-- LOCK - FACE SCAN SIMULATION -->
+<div class="page active" id="lock">
+<div class="card">
+<h2>🔒 Verifikasi Wajah</h2>
+<div id="faceScan">🔍 Scan Wajah Cheisya</div><br>
+<button onclick="unlock()">Mulai</button>
+</div>
+</div>
+
+<!-- HERO -->
+<div class="page" id="hero">
+<div class="card">
+<h1>🎂 Happy Birthday</h1>
+<h2>💖 Cheisya Siva 💖</h2>
+<p id="count"></p>
+<p>Swipe ➜</p>
+</div>
+</div>
+
+<!-- GALLERY -->
+<div class="page" id="gallery">
+<div class="card">
+<h2>📸 Kenangan Kita</h2>
+<div class="slider">
+<img src="photo1.jpg">
+<img src="photo2.jpg">
+<img src="photo3.jpg">
+</div>
+<p>Swipe ➜</p>
+</div>
+</div>
+
+<!-- LETTER -->
+<div class="page" id="letter">
+<div class="card">
+<h2>💌 Surat Cinta</h2>
+<p>Cheisya sayang,<br>Kamu adalah cinta terbaikku.<br>Terima kasih sudah hadir.<br>Aku akan selalu menjagamu ❤️</p>
+<p>Swipe ➜</p>
+</div>
+</div>
+
+<!-- GIFT -->
+<div class="page" id="gift">
+<div class="card">
+<h2>🎁 Hadiah Untukmu</h2>
+<div class="gift" onclick="openGift()"></div>
+<video id="giftVideo" width="100%" controls style="display:none">
+<source src="gift.mp4" type="video/mp4">
+</video>
+</div>
+</div>
+
+<!-- FINAL PROPOSAL -->
+<div class="page" id="final">
+<div class="card">
+<h1>💍 Will You Marry Me? 💖</h1>
+<p>Cheisya, maukah kamu melanjutkan hidup bersamaku selamanya?</p>
+<button onclick="proposalYes()">YES ❤️</button>
+</div>
+</div>
+
+<audio id="music" src="music.mp3"></audio>
+
+<script>
+const pages=document.querySelectorAll(".page");let i=0;
+
+/* PASSWORD / FACE SIMULATION */
+function unlock(){
+const scan=document.getElementById("faceScan");
+scan.textContent="Memindai wajah...";
+setTimeout(()=>next(),3000)
+}
+
+/* NEXT */
+function next(){pages[i].classList.remove("active");i++;pages[i].classList.add("active")}
+
+/* COUNTDOWN */
+const t=new Date("2025-12-27");
+setInterval(()=>{
+const now=new Date();
+const diff=t-now;
+document.getElementById("count").innerHTML=diff<=0?"🎉 Selamat Ulang Tahun Cheisya ❤️":Math.floor(diff/86400000)+" hari lagi 💕";
+},1000)
+
+/* SWIPE NAV */
+let x=0;
+document.addEventListener("touchstart",e=>x=e.touches[0].clientX)
+document.addEventListener("touchend",e=>{
+if(x-e.changedTouches[0].clientX>50)next();
+})
+
+/* MUSIC */
+function music(){document.getElementById("music").play()}
+
+/* HEART CONFETTI */
+setInterval(()=>{
+const h=document.createElement("div");
+h.className="heart";h.innerHTML="❤️";
+h.style.left=Math.random()*100+"vw";
+h.style.animationDuration=3+Math.random()*5+"s";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),8000)
+},300)
+
+/* FIREWORKS 3D */
+const c=document.getElementById("fx"),ctx=c.getContext("2d");
+function resize(){c.width=innerWidth;c.height=innerHeight}
+window.onresize=resize;resize();
+let particles=[];
+function firework(){for(let i=0;i<50;i++){particles.push({x:Math.random()*c.width,y:Math.random()*c.height,dx:(Math.random()-0.5)*5,dy:(Math.random()-0.5)*5,life:Math.random()*50})}}
+setInterval(()=>{
+ctx.clearRect(0,0,c.width,c.height);
+particles.forEach((p,index)=>{
+ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
+ctx.fillRect(p.x,p.y,3,3);
+p.x+=p.dx;p.y+=p.dy;p.life--;
+if(p.life<=0)particles.splice(index,1)
+})
+},30)
+setInterval(firework,800)
+
+/* GIFT VIDEO */
+function openGift(){document.getElementById("giftVideo").style.display="block";}
+
+/* PROPOSAL YES */
+function proposalYes(){alert("💖 Cheisya Siva, aku mencintaimu selamanya! 💖");next();}
+</script>
+
+</body>
+</html>
