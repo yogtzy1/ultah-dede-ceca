@@ -15,32 +15,6 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
 body{background:#000;color:#fff;overflow:hidden;display:flex;flex-direction:column;height:100vh}
 
-/* MAINTENANCE */
-#maintenance{
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  height:100vh;
-  width:100vw;
-  background:#111;
-  color:var(--p);
-  font-size:24px;
-  position:fixed;
-  top:0;
-  left:0;
-  z-index:50;
-  overflow:hidden;
-}
-#countdown{
-  font-size:40px;
-  margin-top:20px;
-  font-weight:bold;
-  letter-spacing:2px;
-  text-shadow:0 0 10px var(--p),0 0 20px var(--s);
-}
-
 /* CONFETTI */
 .confetti{
   position:absolute;
@@ -64,39 +38,29 @@ button:hover{opacity:0.9}
 .slider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory}
 .slider img{width:220px;height:220px;border-radius:20px;margin:10px;object-fit:cover;scroll-snap-align:center}
 
-/* NAV BUTTONS FIXED */
+/* NAV BUTTONS */
 .nav-buttons{
   position:fixed;
   bottom:20px;
   left:50%;
   transform:translateX(-50%);
-  width:auto;
   display:flex;
-  justify-content:space-between;
   gap:10px;
   z-index:20;
 }
 
-/* FINAL CHOICE BUTTONS */
+/* FINAL CHOICE */
 .choice-buttons{
   margin-top:20px;
   display:flex;
   justify-content:center;
   gap:15px;
 }
-.choice-buttons button{
-  padding:12px 28px;
-  border:none;
-  border-radius:30px;
-  font-size:16px;
-  cursor:pointer;
-  transition:0.2s;
-}
-.choice-buttons .yes{background:#ff2e63;color:#fff;}
-.choice-buttons .no{background:#444;color:#fff;}
-.choice-buttons button:hover{transform:scale(1.05);}
+.choice-buttons .yes{background:#ff2e63}
+.choice-buttons .no{background:#444}
+.choice-buttons button:hover{transform:scale(1.05)}
 
-/* FINAL HEART CONFETTI */
+/* FINAL HEART */
 .final-heart{
   position:absolute;
   color:#ff2e63;
@@ -107,9 +71,9 @@ button:hover{opacity:0.9}
 
 /* VIDEO BUTTON */
 #giftBtn{
-  padding:15px 30px; 
-  font-size:24px; 
-  border-radius:50%; 
+  padding:15px 30px;
+  font-size:24px;
+  border-radius:50%;
   cursor:pointer;
   margin:20px 0;
 }
@@ -119,12 +83,6 @@ button:hover{opacity:0.9}
 <body>
 <div class="bg"></div>
 <canvas id="fx"></canvas>
-
-<!-- MAINTENANCE -->
-<div id="maintenance">
-  <h1>Website Sedang Maintenance</h1>
-  <p id="countdown"></p>
-</div>
 
 <!-- HERO -->
 <div class="page active" id="hero">
@@ -140,25 +98,24 @@ button:hover{opacity:0.9}
   <div class="card">
     <h2>Picture Kenangan Kita</h2>
     <div class="slider">
-      <img src="photo1.jpg" class="no-swipe">
-      <img src="photo2.jpg" class="no-swipe">
-      <img src="photo3.jpg" class="no-swipe">
+      <img src="photo1.jpg">
+      <img src="photo2.jpg">
+      <img src="photo3.jpg">
     </div>
   </div>
 </div>
 
 <!-- LETTER -->
 <div class="page" id="letter">
-  <div class="card letter-card">
-    <h2>Ucapan dari akuu untuk kamu</h2>
-    <p class="glow-text">
-      Sayang,<br>
-      Happy Birthday.<br>
-      Semoga panjang umur, sehat selalu yaa.<br>
-      Semoga jadi anak yang berbakti dan selalu menjadi kebanggan orang tua,<br>
-      dan segala sesuatu atau impianmu bisa terwujud di hari kelak,<br>
-      sehat sehat yaa sayaang aku akan selalu ada di sampingmu di saat kamu sedih ataupun bahagia<br>
-      <strong>AKU SAYANG KAMU SELAMANYAAAAAAAAAA❤️</strong>
+  <div class="card">
+    <h2>Ucapan dari akuu</h2>
+    <p>
+      Sayang,<br><br>
+      Happy Birthday ❤️<br>
+      Semoga panjang umur dan sehat selalu yaa.<br>
+      Semoga semua impian kamu tercapai.<br>
+      Aku akan selalu ada buat kamu.<br><br>
+      <strong>AKU SAYANG KAMU SELAMANYA ❤️</strong>
     </p>
   </div>
 </div>
@@ -166,21 +123,19 @@ button:hover{opacity:0.9}
 <!-- GIFT -->
 <div class="page" id="gift">
   <div class="card">
-    <h2>🎁 Hadiah Buat kamuuu sayaangg</h2>
-    <div style="text-align:center;">
-      <button id="giftBtn">🎁</button>
-    </div>
-    <video id="giftVideo" controls style="display:none; width:100%; border-radius:15px; margin-top:20px;">
+    <h2>🎁 Hadiah Buat Kamuuu</h2>
+    <button id="giftBtn">🎁</button>
+    <video id="giftVideo" controls style="display:none;width:100%;border-radius:15px;margin-top:20px">
       <source src="https://files.catbox.moe/kla6mz.mp4" type="video/mp4">
     </video>
   </div>
 </div>
 
-<!-- FINAL PROPOSAL -->
+<!-- FINAL -->
 <div class="page" id="final">
   <div class="card">
     <h1>Do you want to be with me forever?</h1>
-    <p>SAYAANGGG, apa kamu mau sama aku selamanya?</p>
+    <p>Sayaang, kamu mau sama aku selamanya?</p>
     <div class="choice-buttons">
       <button class="yes" id="yesBtn">Mau ❤️</button>
       <button class="no" id="noBtn">Tidak 💔</button>
@@ -188,18 +143,18 @@ button:hover{opacity:0.9}
   </div>
 </div>
 
-<!-- TERIMA KASIH -->
+<!-- THANK YOU -->
 <div class="page" id="thank">
   <div class="card">
-    <h1>TERIMA KASIH SAYAANG</h1>
-    <p>TERIMA KASIH UDAH MAU BUKA WEB INI</p>
+    <h1>TERIMA KASIH SAYANG ❤️</h1>
+    <p>Makasih udah buka web ini</p>
   </div>
 </div>
 
-<!-- NAV BUTTONS -->
+<!-- NAV -->
 <div class="nav-buttons">
-  <button onclick="prev()" class="no-swipe">⬅ Kembali</button>
-  <button onclick="next()" class="no-swipe">➡ Lanjut</button>
+  <button onclick="prev()">⬅ Kembali</button>
+  <button onclick="next()">➡ Lanjut</button>
 </div>
 
 <audio id="music" src="music.mp3"></audio>
@@ -208,153 +163,78 @@ button:hover{opacity:0.9}
 const pages = document.querySelectorAll(".page");
 let i = 0;
 
-// MAINTENANCE SETUP
-const maintenanceDiv = document.getElementById("maintenance");
-const countdownEl = document.getElementById("countdown");
-const maintenanceEnd = new Date("2025-12-27T00:00:00"); // sampai 27 Desember 00:00 WIB
-
-function checkMaintenance(){
-    const now = new Date();
-    if(now < maintenanceEnd){
-        maintenanceDiv.style.display = "flex";
-        pages.forEach(p=>p.classList.remove("active"));
-        const diff = maintenanceEnd - now;
-        const days = Math.floor(diff / (1000*60*60*24));
-        const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
-        const mins = Math.floor((diff%(1000*60*60))/(1000*60));
-        const secs = Math.floor((diff%(1000*60))/1000);
-        countdownEl.innerHTML = `${days.toString().padStart(2,'0')} : ${hours.toString().padStart(2,'0')} : ${mins.toString().padStart(2,'0')} : ${secs.toString().padStart(2,'0')}`;
-
-        // Confetti animasi
-        const conf = document.createElement("div");
-        conf.className="confetti";
-        conf.innerHTML="🎉";
-        conf.style.left=Math.random()*100+"vw";
-        conf.style.top="100vh";
-        document.body.appendChild(conf);
-        setTimeout(()=>conf.remove(),3000);
-    } else {
-        maintenanceDiv.style.display="none";
-        pages.forEach(p=>p.style.display="none");
-        pages[0].classList.add("active");
-    }
-}
-setInterval(checkMaintenance,1000);
-checkMaintenance();
-
-/* NEXT & PREV */
+/* NAV */
 function next(){
-    pages[i].classList.remove("active");
-    i++;
-    if(i >= pages.length) i = pages.length - 1;
-    pages[i].classList.add("active");
+  pages[i].classList.remove("active");
+  i = Math.min(i+1, pages.length-1);
+  pages[i].classList.add("active");
 }
 function prev(){
-    pages[i].classList.remove("active");
-    i--;
-    if(i < 0) i = 0;
-    pages[i].classList.add("active");
+  pages[i].classList.remove("active");
+  i = Math.max(i-1, 0);
+  pages[i].classList.add("active");
 }
 
-/* COUNTDOWN HARI ULANG TAHUN */
+/* COUNTDOWN ULANG TAHUN */
 const t = new Date("2025-12-27");
 setInterval(()=>{
-    const now = new Date();
-    const diff = t - now;
-    document.getElementById("count").innerHTML = diff<=0 ? "Selamat Ulang Tahun Yaa Sayang" : Math.floor(diff/86400000)+" hari lagi 💕";
+  const diff = t - new Date();
+  document.getElementById("count").innerHTML =
+    diff<=0 ? "Selamat Ulang Tahun Sayang ❤️" :
+    Math.floor(diff/86400000)+" hari lagi 💕";
 },1000);
 
-/* SWIPE NAV - SAFE */
-let startX = 0;
-document.addEventListener("touchstart", e => {
-    if(!e.target.classList.contains("no-swipe")) startX = e.touches[0].clientX;
-});
-document.addEventListener("touchend", e => {
-    if(!e.target.classList.contains("no-swipe")){
-        const endX = e.changedTouches[0].clientX;
-        if(startX - endX > 50) next();
-        if(startX - endX < -50) prev();
-    }
-});
-
-/* MUSIC */
-function music(){document.getElementById("music").play()}
-
-/* HEART CONFETTI */
-setInterval(()=>{
-    const h = document.createElement("div");
-    h.className = "heart";
-    h.innerHTML = "❤️";
-    h.style.left = Math.random()*100+"vw";
-    h.style.animationDuration = 3+Math.random()*5+"s";
-    document.body.appendChild(h);
-    setTimeout(()=>h.remove(),8000);
-},300);
-
-/* FIREWORKS 3D */
+/* FIREWORK */
 const c = document.getElementById("fx"), ctx = c.getContext("2d");
-function resize(){c.width = innerWidth; c.height = innerHeight;}
-window.onresize = resize; resize();
-let particles = [];
-function firework(){for(let j=0;j<50;j++){
-    particles.push({x:Math.random()*c.width, y:Math.random()*c.height, dx:(Math.random()-0.5)*5, dy:(Math.random()-0.5)*5, life:Math.random()*50});
-}}
+function resize(){c.width=innerWidth;c.height=innerHeight}
+window.onresize=resize;resize();
+let p=[];
 setInterval(()=>{
-    ctx.clearRect(0,0,c.width,c.height);
-    particles.forEach((p,index)=>{
-        ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
-        ctx.fillRect(p.x,p.y,3,3);
-        p.x += p.dx; p.y += p.dy; p.life--;
-        if(p.life<=0) particles.splice(index,1);
-    });
+  ctx.clearRect(0,0,c.width,c.height);
+  p.forEach((x,i)=>{
+    ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
+    ctx.fillRect(x.x,x.y,3,3);
+    x.x+=x.dx;x.y+=x.dy;x.l--;
+    if(x.l<=0)p.splice(i,1);
+  });
 },30);
-setInterval(firework,800);
+setInterval(()=>{
+  for(let j=0;j<40;j++)
+    p.push({x:Math.random()*c.width,y:Math.random()*c.height,
+    dx:(Math.random()-.5)*4,dy:(Math.random()-.5)*4,l:50});
+},800);
 
-/* GIFT VIDEO */
-const giftBtn = document.getElementById("giftBtn");
-giftBtn.addEventListener("click", ()=>{
-    const video = document.getElementById("giftVideo");
-    video.style.display = "block";
-    video.scrollIntoView({behavior:"smooth"});
-    video.play();
-});
+/* GIFT */
+giftBtn.onclick=()=>{
+  giftVideo.style.display="block";
+  giftVideo.play();
+};
 
-/* FINAL PROPOSAL INTERAKTIF */
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
-const nomorWA = "6285762184102"; 
-const pesanWA = `Aku mau sama kamuu selamanya 💖`;
-
-yesBtn.addEventListener("click", ()=>{
-    for(let i=0;i<20;i++){
-        const h = document.createElement("div");
-        h.className = "final-heart";
-        h.innerHTML = "❤️";
-        h.style.left = Math.random()*80 + "vw";
-        h.style.top = "80vh";
-        document.body.appendChild(h);
-        setTimeout(()=>h.remove(),3000);
-    }
-    window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(pesanWA)}`,"_blank");
-    setTimeout(()=>{
-        pages[i].classList.remove("active");
-        document.getElementById("thank").classList.add("active");
-    },3000);
-});
-
-// Klik "Tidak 💔" → kabur
-noBtn.addEventListener("mouseenter", ()=>{
-    const maxX = window.innerWidth - noBtn.offsetWidth;
-    const maxY = window.innerHeight - noBtn.offsetHeight;
-    const randX = Math.floor(Math.random() * maxX);
-    const randY = Math.floor(Math.random() * maxY);
-    noBtn.style.position = "absolute";
-    noBtn.style.left = randX + "px";
-    noBtn.style.top = randY + "px";
-});
+/* FINAL */
+yesBtn.onclick=()=>{
+  for(let i=0;i<20;i++){
+    const h=document.createElement("div");
+    h.className="final-heart";h.innerHTML="❤️";
+    h.style.left=Math.random()*80+"vw";
+    h.style.top="80vh";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),3000);
+  }
+  window.open("https://wa.me/6285762184102?text=Aku%20mau%20sama%20kamu%20selamanya%20❤️");
+  setTimeout(()=>{
+    pages[i].classList.remove("active");
+    thank.classList.add("active");
+  },3000);
+};
+noBtn.onmouseenter=()=>{
+  noBtn.style.position="absolute";
+  noBtn.style.left=Math.random()*80+"vw";
+  noBtn.style.top=Math.random()*80+"vh";
+};
 </script>
 </body>
 </html>
+
 
 
 
